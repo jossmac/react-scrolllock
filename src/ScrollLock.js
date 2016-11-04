@@ -1,4 +1,4 @@
-import { Component } from 'react';
+var React = require('react');
 
 /*
 	NOTES
@@ -7,7 +7,7 @@ import { Component } from 'react';
 	2. Mobile Safari ignores { overflow: hidden } declaration on the body.
 */
 
-export default class ScrollLock extends Component {
+class ScrollLock extends React.Component {
 	constructor () {
 		super();
 		this.locked = false;
@@ -56,3 +56,5 @@ function canUseDom () {
 		&& window.document.createElement
 	);
 };
+
+module.exports = ScrollLock;
