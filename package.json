@@ -1,0 +1,25 @@
+{
+  "name": "react-scrolllock",
+  "version": "1.0.0",
+  "description": "Prevent scroll on the body when component is mounted.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jossmac/react-scrolllock.git"
+  },
+  "author": "Joss Mackison (https://github.com/jossmac)",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "react-component",
+    "scroll",
+    "scroll-lock"
+  ],
+  "bugs": {
+    "url": "https://github.com/jossmac/react-scrolllock/issues"
+  },
+  "peerDependencies": {
+    "react": "^0.14 || ^15.0"
+  },
+  "homepage": "https://github.com/jossmac/react-scrolllock#readme"
+}
