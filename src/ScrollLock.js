@@ -7,12 +7,7 @@ var React = require('react');
 	2. Mobile Safari ignores { overflow: hidden } declaration on the body.
 */
 
-class ScrollLock extends React.Component {
-	constructor () {
-		super();
-		this.locked = false;
-	}
-
+var ScrollLock = React.createClass({
 	componentWillMount () {
 		if (!canUseDom) return;
 
@@ -23,10 +18,7 @@ class ScrollLock extends React.Component {
 
 		target.style.paddingRight = scrollbarWidth + 'px';
 		target.style.overflowY = 'hidden';
-
-		this.locked = true;
-	}
-
+	},
 	componentWillUnmount () {
 		if (!canUseDom) return;
 
@@ -36,14 +28,11 @@ class ScrollLock extends React.Component {
 
 		target.style.paddingRight = '';
 		target.style.overflowY = '';
-
-		this.locked = false;
-	}
-
+	},
 	render () {
 		return null;
 	}
-}
+});
 
 function preventTouchMove (e) {
 	e.preventDefault();
