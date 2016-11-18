@@ -8,7 +8,7 @@ var React = require('react');
 */
 
 var ScrollLock = React.createClass({
-	componentWillMount () {
+	componentWillMount: function () {
 		if (!canUseDom) return;
 
 		const scrollbarWidth = window.innerWidth - document.body.clientWidth; // 1.
@@ -19,7 +19,7 @@ var ScrollLock = React.createClass({
 		target.style.paddingRight = scrollbarWidth + 'px';
 		target.style.overflowY = 'hidden';
 	},
-	componentWillUnmount () {
+	componentWillUnmount: function () {
 		if (!canUseDom) return;
 
 		const target = document.body;
@@ -29,7 +29,7 @@ var ScrollLock = React.createClass({
 		target.style.paddingRight = '';
 		target.style.overflowY = '';
 	},
-	render () {
+	render: function () {
 		return null;
 	}
 });
