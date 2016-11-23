@@ -41,8 +41,8 @@ var ScrollLock = React.createClass({
 		target.removeEventListener('touchmove', preventTouchMove, false);
 
 		if (scrollTarget) {
-			scrollTarget.addEventListener('touchstart', preventInertiaScroll, false);
-			scrollTarget.addEventListener('touchmove', allowTouchMove, false);
+			scrollTarget.removeEventListener('touchstart', preventInertiaScroll, false);
+			scrollTarget.removeEventListener('touchmove', allowTouchMove, false);
 		}
 	},
 	render: function () {
