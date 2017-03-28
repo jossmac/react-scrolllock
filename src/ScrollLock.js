@@ -8,6 +8,7 @@ var React = require('react');
 	3. Allow scroll on provided target.
 */
 
+var listenerOptions = { capture: false, passive: false };
 var ScrollLock = React.createClass({
 	propTypes: {
 		scrollTarget: React.PropTypes.object,
@@ -22,11 +23,11 @@ var ScrollLock = React.createClass({
 		target.style.paddingRight = scrollbarWidth + 'px';
 		target.style.overflowY = 'hidden';
 
-		target.addEventListener('touchmove', preventTouchMove, false); // 2.
+		target.addEventListener('touchmove', preventTouchMove, listenerOptions); // 2.
 
 		if (scrollTarget) {
-			scrollTarget.addEventListener('touchstart', preventInertiaScroll, false); // 3.
-			scrollTarget.addEventListener('touchmove', allowTouchMove, false); // 3.
+			scrollTarget.addEventListener('touchstart', preventInertiaScroll, listenerOptions); // 3.
+			scrollTarget.addEventListener('touchmove', allowTouchMove, listenerOptions); // 3.
 		}
 	},
 	componentWillUnmount: function () {
@@ -38,11 +39,11 @@ var ScrollLock = React.createClass({
 		target.style.paddingRight = '';
 		target.style.overflowY = '';
 
-		target.removeEventListener('touchmove', preventTouchMove, false);
+		target.removeEventListener('touchmove', preventTouchMove, listenerOptions);
 
 		if (scrollTarget) {
-			scrollTarget.removeEventListener('touchstart', preventInertiaScroll, false);
-			scrollTarget.removeEventListener('touchmove', allowTouchMove, false);
+			scrollTarget.removeEventListener('touchstart', preventInertiaScroll, listenerOptions);
+			scrollTarget.removeEventListener('touchmove', allowTouchMove, listenerOptions);
 		}
 	},
 	render: function () {
