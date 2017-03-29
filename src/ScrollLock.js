@@ -12,15 +12,22 @@ var listenerOptions = { capture: false, passive: false };
 var ScrollLock = React.createClass({
 	propTypes: {
 		scrollTarget: React.PropTypes.object,
+		preventContentJumping: React.PropTypes.bool
+	},
+	defaultProps: {
+		preventContentJumping: true
 	},
 	componentDidMount: function () {
 		if (!canUseDom) return;
 
 		var scrollTarget = this.props.scrollTarget;
-		var scrollbarWidth = window.innerWidth - document.body.clientWidth; // 1.
 		var target = document.body;
 
-		target.style.paddingRight = scrollbarWidth + 'px';
+		if (this.props.preventContentJumping) {
+			var scrollbarWidth = window.innerWidth - document.body.clientWidth; // 1.
+
+			target.style.paddingRight = scrollbarWidth + 'px';
+		}
 		target.style.overflowY = 'hidden';
 
 		target.addEventListener('touchmove', preventTouchMove, listenerOptions); // 2.
@@ -36,7 +43,9 @@ var ScrollLock = React.createClass({
 		var scrollTarget = this.props.scrollTarget;
 		var target = document.body;
 
-		target.style.paddingRight = '';
+		if (this.props.preventContentJumping) {
+			target.style.paddingRight = '';
+		}
 		target.style.overflowY = '';
 
 		target.removeEventListener('touchmove', preventTouchMove, listenerOptions);
