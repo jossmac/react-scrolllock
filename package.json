@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/jossmac/react-scrolllock#readme",
   "dependencies": {
+    "create-react-class": "^15.5.2",
     "prop-types": "^15.5.8"
   }
 }
