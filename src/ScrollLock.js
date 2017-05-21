@@ -1,4 +1,5 @@
-var React = require('react');
+var PropTypes = require('prop-types');
+var createClass = require('create-react-class');
 
 /*
 	NOTES
@@ -9,10 +10,10 @@ var React = require('react');
 */
 
 var listenerOptions = { capture: false, passive: false };
-var ScrollLock = React.createClass({
+var ScrollLock = createClass({
 	propTypes: {
-		scrollTarget: React.PropTypes.object,
-		preventContentJumping: React.PropTypes.bool
+		scrollTarget: PropTypes.object,
+		preventContentJumping: PropTypes.bool
 	},
 	defaultProps: {
 		preventContentJumping: true
