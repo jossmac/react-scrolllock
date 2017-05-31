@@ -1,4 +1,5 @@
 var React = require('react');
+var PropTypes = require('prop-types');
 
 /*
 	NOTES
@@ -10,7 +11,7 @@ var React = require('react');
 
 var ScrollLock = React.createClass({
 	propTypes: {
-		scrollTarget: React.PropTypes.object,
+		scrollTarget: PropTypes.object,
 	},
 	componentDidMount: function () {
 		if (!canUseDom) return;
