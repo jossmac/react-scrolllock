@@ -14,7 +14,7 @@ var ScrollLock = React.createClass({
 		scrollTarget: PropTypes.object,
 	},
 	componentDidMount: function () {
-		if (!canUseDom) return;
+		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
 		var scrollbarWidth = window.innerWidth - document.body.clientWidth; // 1.
@@ -31,7 +31,7 @@ var ScrollLock = React.createClass({
 		}
 	},
 	componentWillUnmount: function () {
-		if (!canUseDom) return;
+		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
 		var target = document.body;
