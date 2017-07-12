@@ -10,25 +10,33 @@ var createClass = require('create-react-class');
 	3. Allow scroll on provided target.
 */
 
+var listenerOptions = { capture: false, passive: false };
 var ScrollLock = createClass({
 	propTypes: {
 		scrollTarget: PropTypes.object,
+		preventContentJumping: PropTypes.bool
+	},
+	defaultProps: {
+		preventContentJumping: true
 	},
 	componentDidMount: function () {
 		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
-		var scrollbarWidth = window.innerWidth - document.body.clientWidth; // 1.
 		var target = document.body;
 
-		target.style.paddingRight = scrollbarWidth + 'px';
+		if (this.props.preventContentJumping) {
+			var scrollbarWidth = window.innerWidth - document.body.clientWidth; // 1.
+
+			target.style.paddingRight = scrollbarWidth + 'px';
+		}
 		target.style.overflowY = 'hidden';
 
-		target.addEventListener('touchmove', preventTouchMove, false); // 2.
+		target.addEventListener('touchmove', preventTouchMove, listenerOptions); // 2.
 
 		if (scrollTarget) {
-			scrollTarget.addEventListener('touchstart', preventInertiaScroll, false); // 3.
-			scrollTarget.addEventListener('touchmove', allowTouchMove, false); // 3.
+			scrollTarget.addEventListener('touchstart', preventInertiaScroll, listenerOptions); // 3.
+			scrollTarget.addEventListener('touchmove', allowTouchMove, listenerOptions); // 3.
 		}
 	},
 	componentWillUnmount: function () {
@@ -37,14 +45,16 @@ var ScrollLock = createClass({
 		var scrollTarget = this.props.scrollTarget;
 		var target = document.body;
 
-		target.style.paddingRight = '';
+		if (this.props.preventContentJumping) {
+			target.style.paddingRight = '';
+		}
 		target.style.overflowY = '';
 
-		target.removeEventListener('touchmove', preventTouchMove, false);
+		target.removeEventListener('touchmove', preventTouchMove, listenerOptions);
 
 		if (scrollTarget) {
-			scrollTarget.removeEventListener('touchstart', preventInertiaScroll, false);
-			scrollTarget.removeEventListener('touchmove', allowTouchMove, false);
+			scrollTarget.removeEventListener('touchstart', preventInertiaScroll, listenerOptions);
+			scrollTarget.removeEventListener('touchmove', allowTouchMove, listenerOptions);
 		}
 	},
 	render: function () {
