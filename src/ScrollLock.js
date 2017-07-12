@@ -1,5 +1,6 @@
 var React = require('react');
 var PropTypes = require('prop-types');
+var createClass = require('create-react-class');
 
 /*
 	NOTES
@@ -9,7 +10,7 @@ var PropTypes = require('prop-types');
 	3. Allow scroll on provided target.
 */
 
-var ScrollLock = React.createClass({
+var ScrollLock = createClass({
 	propTypes: {
 		scrollTarget: PropTypes.object,
 	},
