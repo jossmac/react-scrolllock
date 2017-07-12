@@ -15,7 +15,7 @@ var ScrollLock = createClass({
 		scrollTarget: PropTypes.object,
 	},
 	componentDidMount: function () {
-		if (!canUseDom) return;
+		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
 		var scrollbarWidth = window.innerWidth - document.body.clientWidth; // 1.
@@ -32,7 +32,7 @@ var ScrollLock = createClass({
 		}
 	},
 	componentWillUnmount: function () {
-		if (!canUseDom) return;
+		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
 		var target = document.body;
