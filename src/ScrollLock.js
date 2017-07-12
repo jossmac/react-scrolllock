@@ -1,3 +1,4 @@
+var React = require('react');
 var PropTypes = require('prop-types');
 var createClass = require('create-react-class');
 
@@ -19,7 +20,7 @@ var ScrollLock = createClass({
 		preventContentJumping: true
 	},
 	componentDidMount: function () {
-		if (!canUseDom) return;
+		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
 		var target = document.body;
@@ -39,7 +40,7 @@ var ScrollLock = createClass({
 		}
 	},
 	componentWillUnmount: function () {
-		if (!canUseDom) return;
+		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
 		var target = document.body;
