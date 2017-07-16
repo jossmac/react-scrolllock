@@ -16,9 +16,6 @@ var ScrollLock = createClass({
 		scrollTarget: PropTypes.object,
 		preventContentJumping: PropTypes.bool
 	},
-	defaultProps: {
-		preventContentJumping: true
-	},
 	componentDidMount: function () {
 		if (!canUseDom()) return;
 
@@ -61,6 +58,10 @@ var ScrollLock = createClass({
 		return null;
 	}
 });
+
+ScrollLock.defaultProps = {
+ preventContentJumping: true
+}
 
 function preventTouchMove (e) {
 	e.preventDefault();
