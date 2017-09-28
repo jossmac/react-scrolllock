@@ -2,7 +2,7 @@
   "name": "react-scrolllock",
   "version": "1.0.9",
   "description": "Prevent scroll on the body when component is mounted.",
-  "main": "index.js",
+  "main": "lib/ScrollLock.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jossmac/react-scrolllock.git"
@@ -18,12 +18,28 @@
   "bugs": {
     "url": "https://github.com/jossmac/react-scrolllock/issues"
   },
-  "peerDependencies": {
-    "react": "^0.14 || ^15.0"
-  },
   "homepage": "https://github.com/jossmac/react-scrolllock#readme",
+  "scripts": {
+    "compile": "babel --plugins transform-es2015-modules-umd src/ -d lib/",
+    "prepublish": "npm run compile"
+  },
+  "peerDependencies": {
+    "react": "^0.14 || ^15.0 || ^16.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "react": "^16.0.0"
+  },
   "dependencies": {
-    "create-react-class": "^15.5.2",
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.6.0"
+  },
+  "babel": {
+    "presets": ["es2015", "stage-2", "react"]
   }
 }
