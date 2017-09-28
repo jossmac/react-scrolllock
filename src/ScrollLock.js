@@ -1,6 +1,5 @@
-var React = require('react');
-var PropTypes = require('prop-types');
-var createClass = require('create-react-class');
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /*
 	NOTES
@@ -11,12 +10,8 @@ var createClass = require('create-react-class');
 */
 
 var listenerOptions = { capture: false, passive: false };
-var ScrollLock = createClass({
-	propTypes: {
-		scrollTarget: PropTypes.object,
-		preventContentJumping: PropTypes.bool
-	},
-	componentDidMount: function () {
+export default class ScrollLock extends Component {
+	componentDidMount() {
 		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
@@ -35,8 +30,9 @@ var ScrollLock = createClass({
 			scrollTarget.addEventListener('touchstart', preventInertiaScroll, listenerOptions); // 3.
 			scrollTarget.addEventListener('touchmove', allowTouchMove, listenerOptions); // 3.
 		}
-	},
-	componentWillUnmount: function () {
+	}
+
+	componentWillUnmount() {
 		if (!canUseDom()) return;
 
 		var scrollTarget = this.props.scrollTarget;
@@ -53,11 +49,17 @@ var ScrollLock = createClass({
 			scrollTarget.removeEventListener('touchstart', preventInertiaScroll, listenerOptions);
 			scrollTarget.removeEventListener('touchmove', allowTouchMove, listenerOptions);
 		}
-	},
-	render: function () {
+	}
+
+	render() {
 		return null;
 	}
-});
+}
+
+ScrollLock.propTypes = {
+	scrollTarget: PropTypes.object,
+	preventContentJumping: PropTypes.bool
+}
 
 ScrollLock.defaultProps = {
  preventContentJumping: true
@@ -90,5 +92,3 @@ function canUseDom () {
 		&& window.document.createElement
 	);
 };
-
-module.exports = ScrollLock;
