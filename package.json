@@ -19,7 +19,7 @@
     "url": "https://github.com/jossmac/react-scrolllock/issues"
   },
   "peerDependencies": {
-    "react": "^0.14 || ^15.0"
+    "react": "^0.14 || ^15.0 || ^16.0"
   },
   "homepage": "https://github.com/jossmac/react-scrolllock#readme",
   "dependencies": {
