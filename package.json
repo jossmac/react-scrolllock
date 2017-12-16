@@ -1,29 +1,49 @@
 {
   "name": "react-scrolllock",
-  "version": "1.0.9",
   "description": "Prevent scroll on the body when component is mounted.",
-  "main": "index.js",
+  "version": "1.0.9",
+  "main": "lib/index.js",
+  "files": ["lib"],
+  "scripts": {
+    "build": "babel src -d lib",
+    "test": "jest",
+    "prepublish": "npm run build"
+  },
+  "jest": {
+    "setupFiles": ["./jest.js"]
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jossmac/react-scrolllock.git"
+    "url": "https://github.com/jossmac/react-scrolllock.git"
   },
   "author": "Joss Mackison (https://github.com/jossmac)",
-  "license": "MIT",
-  "keywords": [
-    "react",
-    "react-component",
-    "scroll",
-    "scroll-lock"
-  ],
   "bugs": {
     "url": "https://github.com/jossmac/react-scrolllock/issues"
   },
-  "peerDependencies": {
-    "react": "^0.14 || ^15.0"
-  },
   "homepage": "https://github.com/jossmac/react-scrolllock#readme",
+  "license": "MIT",
+  "keywords": ["react", "scroll", "scroll-lock", "disable-scroll"],
   "dependencies": {
-    "create-react-class": "^15.5.2",
-    "prop-types": "^15.5.10"
+    "exenv": "^1.2.2"
+  },
+  "peer-dependencies": {
+    "react": "^15.0 || ^16.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.0",
+    "flow-bin": "^0.61.0",
+    "jest": "^21.2.1",
+    "jest-cli": "^21.2.1",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-lorem-component": "^0.12.2"
   }
 }
