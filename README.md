@@ -1,24 +1,26 @@
 # React Scroll Lock
 
-Prevent scroll on the `<body />` when component is mounted.
+Prevent scroll on the `<body />` when a component is mounted.
 
-### Usage
+## Install
 
 ```bash
-npm install --save react-scrolllock
+yarn add react-scrolllock
 ```
+
+## Usage
 
 ```js
 import ScrollLock from 'react-scrolllock';
 
 class Modal extends Component {
-  render () {
+  render() {
     return (
       <div>
         ...
         <ScrollLock />
       </div>
-    )
+    );
   }
 }
 ```

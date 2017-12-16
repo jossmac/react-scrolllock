@@ -1,1 +1,1 @@
-module.exports = require('./src/ScrollLock');
+export { default } from './src';
