@@ -1,6 +1,6 @@
 // @flow
 import { Component } from "react";
-import { canUseDom } from "exenv";
+import { canUseDOM } from "exenv";
 
 import { LOCK_STYLES, STYLE_KEYS } from "./constants";
 import {
@@ -30,7 +30,7 @@ export default class ScrollLock extends Component<Props> {
     accountForScrollbars: true,
   };
   componentDidMount() {
-    if (!canUseDom) return;
+    if (!canUseDOM) return;
 
     const { accountForScrollbars, touchScrollTarget } = this.props;
     const target = document.body;
@@ -90,7 +90,7 @@ export default class ScrollLock extends Component<Props> {
     activeScrollLocks += 1;
   }
   componentWillUnmount() {
-    if (!canUseDom) return;
+    if (!canUseDOM) return;
 
     const { accountForScrollbars, touchScrollTarget } = this.props;
     const target = document.body;
