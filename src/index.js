@@ -45,7 +45,7 @@ export default class ScrollLock extends Component<Props> {
 
     // apply the lock styles and padding if this is the first scroll lock
     if (accountForScrollbars && activeScrollLocks < 1) {
-      const currentPadding = parseInt(this.originalStyles.paddingRight, 10);
+      const currentPadding = parseInt(this.originalStyles.paddingRight, 10) || 0;
       const clientWidth = document.body ? document.body.clientWidth : 0;
       const adjustedPadding =
         window.innerWidth - clientWidth + currentPadding || 0;
