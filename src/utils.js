@@ -21,5 +21,21 @@ export function preventInertiaScroll() {
 // `ontouchstart` check works on most browsers
 // `maxTouchPoints` works on IE10/11 and Surface
 export function isTouchDevice() {
-  return "ontouchstart" in window || navigator.maxTouchPoints;
+  return 'ontouchstart' in window || navigator.maxTouchPoints;
+}
+
+export function getPadding() {
+  const currentPadding = parseInt(document.body.paddingRight, 10) || 0;
+  const clientWidth = document.body ? document.body.clientWidth : 0;
+  const adjustedPadding = window.innerWidth - clientWidth + currentPadding || 0;
+
+  return adjustedPadding;
+}
+
+export function camelToKebab(str: string): string {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+export function parse(val: number | string): string {
+  return isNaN(val) ? val : `${val}px`;
 }
