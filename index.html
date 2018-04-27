@@ -6,18 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <style>
     body {
+      background-color: #f6f6f6;
       font-family: sans-serif;
       line-height: 1.4;
       margin: 0;
+    }
+    .icon {
+      font-size: 32px;
+      margin-right: 8px
+    }
+    h1 {
+      align-items: center;
+      display: flex;
+      margin: 0
     }
     @media (max-width: 400px) {
       h1 {
         font-size: 24px;
       }
     }
-    a { color: dodgerBlue; }
+    a { color: dodgerBlue; text-decoration: none;}
     code {
-      background-color: #f6f6f6;
+      background-color: #e6e6e6;
       border-radius: 3px;
       color: #444;
       display: inline-block;
@@ -25,16 +35,20 @@
       padding: 1px 3px;
     }
     button {
-      background: 0;
-      border: 2px solid #ccc;
+      align-items: center;
+      background: white;
       border-radius: 5px;
+      border: 2px solid #ccc;
+      box-sizing: border-box;
       color: #888;
       cursor: pointer;
-      font-size: 18px;
+      display: flex;
+      font-size: 24px;
       font-weight: 500;
-      padding: 10px 15px;
-      width: 160px;
+      justify-content: center;
       outline: 0;
+      padding: 10px 15px;
+      width: 100%;
     }
     button:hover,
     button:focus {
@@ -42,7 +56,12 @@
       color: #666;
     }
     button:active {
-      background-color: #f6f6f6;
+      background-color: #f0f0f0;
+    }
+    footer {
+      color: #999;
+      display: flex;
+      justify-content: space-between;
     }
   </style>
 </head>
