@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import ScrollLock from '../../src';
+
+import ScrollLock, { PropertyToggle } from '../../src';
+import './index.css';
 
 // styled components
 // ------------------------------
@@ -8,19 +10,25 @@ import ScrollLock from '../../src';
 const Container = ({ height, ...props }) => (
   <div
     style={{
-      height: height,
       display: 'flex',
-      justifyContent: 'center',
       flexDirection: 'column',
+      height: height,
+      justifyContent: 'center',
       marginLeft: 'auto',
       marginRight: 'auto',
       maxWidth: 420,
-      padding: 10,
+      padding: 15,
+      textAlign: 'center',
     }}
     {...props}
   />
 );
-const Line = () => <hr style={{ background: '#ddd', border: 0, height: 1, margin: '2em 0' }} />;
+const Anchor = ({ isLocked, ...props }) => (
+  <a style={{ color: isLocked ? '#FF5630' : '#36B37E' }} {...props} />
+);
+
+// helpers
+// ------------------------------
 
 function getHeight() {
   if (window && window.innerHeight) {
@@ -32,11 +40,10 @@ function getHeight() {
 // ------------------------------
 
 class App extends Component {
-  state = { isLocked: false };
+  state = { isLocked: false, lockCount: 0 };
   componentDidMount() {
     setTimeout(() => {
-      console.log('scroll', getHeight() / 4);
-      window.scrollTo(0, getHeight() / 4);
+      window.scrollTo(0, getHeight() / 3.5);
     }, 100);
   }
 
@@ -48,33 +55,30 @@ class App extends Component {
     const { isLocked } = this.state;
     return (
       <Container height={getHeight()}>
-        <h1>
-          <span className="icon" role="img">
-            🚫
-          </span>
-          <span>React Scroll Lock</span>
-        </h1>
-        <p>
-          Prevent scroll on the <code>{'<body />'}</code> when mounted.
-        </p>
-        <p style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 0 }}>
-          <button onClick={this.toggleLock}>
-            <span role="img" style={{ fontSize: 48, marginRight: 10 }}>
-              {isLocked ? '🔒' : '🔐'}
-            </span>
-            {isLocked ? 'Locked' : 'Unlocked'}
-          </button>
-        </p>
+        {/* {isLocked ? <ScrollLock /> : null} */}
         {isLocked ? <ScrollLock /> : null}
-        <Line />
+        {isLocked ? (
+          <PropertyToggle styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }} />
+        ) : null}
+
+        <header>
+          <div role="img" className="icon animate-dropin" style={isLocked ? { bottom: -3 } : null}>
+            {isLocked ? '🔒' : '🔓'}
+          </div>
+          <div>
+            Prevent scroll on <code>{'<body />'}</code> with
+            <h1>
+              {' '}
+              <a href="https://github.com/jossmac/react-scrolllock">react-scrolllock</a>.
+            </h1>
+          </div>
+        </header>
+        <button onClick={this.toggleLock}>{isLocked ? 'Locked' : 'Unlocked'}</button>
         <footer>
-          <span>
-            Made by{' '}
-            <a href="https://twitter.com/jossmackison" target="_blank">
-              @jossmac
-            </a>
-          </span>
-          <a href="https://github.com/jossmac/react-scrolllock">GitHub</a>
+          <span> by </span>
+          <Anchor isLocked={isLocked} href="https://twitter.com/jossmackison" target="_blank">
+            @jossmac
+          </Anchor>
         </footer>
       </Container>
     );
