@@ -7,14 +7,12 @@ type Keys = Array<string>;
 type Props = {
   attributes: ObjectType,
   styles: ObjectType,
-  target: HTMLElement,
+  target?: HTMLElement,
 };
 
 // create defaults
-const defaultTarget = ((document.body: any): HTMLElement);
 const defaultProps = {
   attributes: {},
-  target: defaultTarget,
   styles: {},
 };
 
@@ -26,7 +24,9 @@ export class PropertyToggle extends PureComponent<Props> {
   static defaultProps = defaultProps;
 
   componentDidMount() {
-    const { attributes, styles, target } = this.props;
+    const { attributes, styles, target = document.body } = this.props;
+    if (!target) return;
+
     this.attributeKeys = Object.keys(attributes);
     this.styleKeys = Object.keys(styles);
 
@@ -47,7 +47,8 @@ export class PropertyToggle extends PureComponent<Props> {
     }
   }
   componentWillUnmount() {
-    const { target } = this.props;
+    const { target = document.body } = this.props;
+    if (!target) return;
 
     // styles
     if (this.styleKeys.length) {

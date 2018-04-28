@@ -10,6 +10,8 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   background-color: #e3fcef;
   background: linear-gradient(165deg, #abf5d1, #e3fcef);
+  background-repeat: no-repeat;
+  background-position: left top;
   color: #253858;
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 18px;
