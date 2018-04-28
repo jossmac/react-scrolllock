@@ -1,8 +1,8 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { canUseDOM } from 'exenv';
+import { SimpleToggle } from 'react-prop-toggle';
 
-import { PropertyToggle } from './PropertyToggle';
 import { getPadding, getDocumentHeight } from './utils';
 import withTouchListeners from './withTouchListeners';
 
@@ -52,7 +52,7 @@ class ScrollLock extends PureComponent<Props> {
     const height = `${getDocumentHeight()}px`;
 
     return (
-      <PropertyToggle
+      <SimpleToggle
         styles={{
           'box-sizing': 'border-box', // account for possible declaration `width: 100%;` on body
           overflow: 'hidden',

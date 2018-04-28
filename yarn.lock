@@ -6140,6 +6140,10 @@ react-lorem-component@^0.12.2:
     object-assign "^4.1.0"
     seedable-random "0.0.1"
 
+react-prop-toggle@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-prop-toggle/-/react-prop-toggle-1.0.2.tgz#8b0b7e74653606b1427cfcf6c4eaa9198330568e"
+
 react-test-renderer@^16.0.0-0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.2.0.tgz#bddf259a6b8fcd8555f012afc8eacc238872a211"

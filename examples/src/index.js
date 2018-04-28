@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import PropToggle from 'react-prop-toggle';
 
-import ScrollLock, { PropertyToggle } from '../../src';
+import ScrollLock from '../../src';
 import { getWindowHeight } from '../../src/utils';
 import './index.css';
 
@@ -65,9 +66,7 @@ class App extends Component {
     return (
       <Container height={getWindowHeight(2)}>
         {isLocked ? <ScrollLock /> : null}
-        {isLocked ? (
-          <PropertyToggle styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }} />
-        ) : null}
+        <PropToggle isActive={isLocked} styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }} />
 
         <header>
           <div role="img" className="icon animate-dropin" style={isLocked ? { bottom: -3 } : null}>
