@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 import ScrollLock, { PropertyToggle } from '../../src';
+import { getWindowHeight } from '../../src/utils';
 import './index.css';
 
 // styled components
@@ -27,35 +28,42 @@ const Anchor = ({ isLocked, ...props }) => (
   <a style={{ color: isLocked ? '#FF5630' : '#36B37E' }} {...props} />
 );
 
-// helpers
-// ------------------------------
-
-function getHeight() {
-  if (window && window.innerHeight) {
-    return window.innerHeight * 2;
-  }
-}
-
 // example
 // ------------------------------
 
 class App extends Component {
+  currentHeight: number;
   state = { isLocked: false, lockCount: 0 };
   componentDidMount() {
+    this.currentHeight = window.innerHeight;
+
+    // center the content
     setTimeout(() => {
-      window.scrollTo(0, getHeight() / 3.5);
+      window.scrollTo(0, getWindowHeight(0.6));
     }, 100);
   }
 
   toggleLock = () => {
-    this.setState(state => ({ isLocked: !state.isLocked }));
+    this.setState(state => {
+      const isLocked = !state.isLocked;
+      const offset = window.innerHeight - this.currentHeight;
+
+      // adjust scroll if the window has been resized
+      if (offset && isLocked) {
+        window.scrollTo(0, window.pageYOffset + offset);
+      }
+
+      this.currentHeight = window.innerHeight;
+
+      return { isLocked };
+    });
   };
 
   render() {
     const { isLocked } = this.state;
+
     return (
-      <Container height={getHeight()}>
-        {/* {isLocked ? <ScrollLock /> : null} */}
+      <Container height={getWindowHeight(2)}>
         {isLocked ? <ScrollLock /> : null}
         {isLocked ? (
           <PropertyToggle styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }} />
