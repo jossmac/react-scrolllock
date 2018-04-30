@@ -1,9 +1,14 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
+
+const htmlPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, 'examples/src/index.html'),
   filename: './index.html',
 });
+const faviconPlugin = new HtmlWebpackPlugin({
+  favicon: 'examples/src/favicon.ico',
+});
+
 module.exports = {
   entry: path.join(__dirname, 'examples/src/index.js'),
   output: {
@@ -23,7 +28,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [htmlWebpackPlugin],
+  plugins: [htmlPlugin, faviconPlugin],
   resolve: {
     extensions: ['.js', '.jsx'],
   },
