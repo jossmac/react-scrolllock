@@ -4,30 +4,19 @@ import PropToggle from 'react-prop-toggle';
 
 import ScrollLock from '../../src';
 import { getWindowHeight } from '../../src/utils';
+import {
+  Anchor,
+  Button,
+  Code,
+  Container,
+  Footer,
+  Header,
+  Icon,
+  Repo,
+  Title,
+  TouchScrollArea,
+} from './styled';
 import './index.css';
-
-// styled components
-// ------------------------------
-
-const Container = ({ height, ...props }) => (
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'column',
-      height: height,
-      justifyContent: 'center',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      maxWidth: 420,
-      padding: 15,
-      textAlign: 'center',
-    }}
-    {...props}
-  />
-);
-const Anchor = ({ isLocked, ...props }) => (
-  <a style={{ color: isLocked ? '#FF5630' : '#36B37E' }} {...props} />
-);
 
 // example
 // ------------------------------
@@ -59,34 +48,58 @@ class App extends Component {
       return { isLocked };
     });
   };
+  getScrollArea = ref => {
+    this.scrollArea = ref;
+  };
 
   render() {
     const { isLocked } = this.state;
 
     return (
       <Container height={getWindowHeight(2)}>
-        {isLocked ? <ScrollLock /> : null}
-        <PropToggle isActive={isLocked} styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }} />
+        {isLocked ? <ScrollLock touchScrollTarget={this.scrollArea} /> : null}
+        <PropToggle
+          isActive={isLocked}
+          styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }}
+        />
 
-        <header>
-          <div role="img" className="icon animate-dropin" style={isLocked ? { bottom: -3 } : null}>
+        <Header>
+          <Icon role="img" className="animate-dropin" style={isLocked ? { bottom: -3 } : null}>
             {isLocked ? '🔒' : '🔓'}
-          </div>
+          </Icon>
           <div>
-            Prevent scroll on <code>{'<body />'}</code> with
-            <h1>
+            Prevent scroll on <Code>{'<body />'}</Code> with
+            <Title>
               {' '}
-              <a href="https://github.com/jossmac/react-scrolllock">react-scrolllock</a>.
-            </h1>
+              <Repo href="https://github.com/jossmac/react-scrolllock">react-scrolllock</Repo>
+            </Title>
           </div>
-        </header>
-        <button onClick={this.toggleLock}>{isLocked ? 'Locked' : 'Unlocked'}</button>
-        <footer>
+        </Header>
+        <Button onClick={this.toggleLock}>{isLocked ? 'Locked' : 'Unlocked'}</Button>
+
+        <TouchScrollArea
+          innerRef={this.getScrollArea}
+          height={this.scrollArea && this.scrollArea.clientHeight}
+        >
+          <p>
+            Provide an element to the <Code>touchScrollTarget</Code> property if you need an area
+            that supports scroll on mobile.
+          </p>
+          {isLocked ? (
+            <p>
+              This is necessary because the <Code>touchmove</Code> event is explicitly cancelled
+              &mdash; iOS doesn't observe <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
+              <Code>{'<body />'}</Code> element 😢
+            </p>
+          ) : null}
+        </TouchScrollArea>
+
+        <Footer>
           <span> by </span>
           <Anchor isLocked={isLocked} href="https://twitter.com/jossmackison" target="_blank">
             @jossmac
           </Anchor>
-        </footer>
+        </Footer>
       </Container>
     );
   }
