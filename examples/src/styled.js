@@ -81,6 +81,7 @@ export const TouchScrollArea = ({ height, innerRef, ...props }) => (
       overflowY: 'auto',
       paddingLeft: gutter,
       paddingRight: gutter,
+      '-webkit-overflow-scrolling': 'touch',
 
       '@media (max-width: 420px)': {
         display: 'block',
