@@ -1,5 +1,8 @@
+__tests__
+config
 src
 examples
 .babelrc
 .gitignore
+index.js
 webpack.config.js
