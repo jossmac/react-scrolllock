@@ -54,3 +54,26 @@ export function getDocumentHeight() {
 export function parse(val: number | string): string {
   return isNaN(val) ? val : `${val}px`;
 }
+
+// ==============================
+// Style Sheets
+// ==============================
+
+export function makeStyleTag(id) {
+  let tag = document.createElement('style');
+  tag.type = 'text/css';
+  tag.id = id;
+
+  return tag;
+}
+export function injectStyles(tag, css) {
+  if (tag.styleSheet) {
+    tag.styleSheet.cssText = css;
+  } else {
+    tag.appendChild(document.createTextNode(css));
+  }
+}
+export function insertStyleTag(tag) {
+  const head = document.head || document.getElementsByTagName('head')[0];
+  head.appendChild(tag);
+}
