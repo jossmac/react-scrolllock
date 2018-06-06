@@ -62,7 +62,7 @@ export function parse(val: number | string): string {
 export function makeStyleTag(id) {
   let tag = document.createElement('style');
   tag.type = 'text/css';
-  tag.id = id;
+  tag.setAttribute('data-react-scrolllock', '');
 
   return tag;
 }

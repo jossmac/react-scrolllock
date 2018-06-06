@@ -1,23 +1,29 @@
-// @flow
 import React, { Component } from 'react';
 import { mount } from 'enzyme';
-import Lorem from 'react-lorem-component';
 
 import ScrollLock from '../src';
-import { SHEET_ID } from '../src/StyleSheet';
-
-const Mock = () => (
-  <div>
-    <Lorem count={100} />
-    <ScrollLock />
-  </div>
-);
 
 describe('test', () => {
   it('should find the lock sheet', () => {
-    const stylesheet = document.querySelector(SHEET_ID);
-    const wrapper = mount(<Mock />);
+    const wrapper = mount(<ScrollLock />);
+    const stylesheet = document.querySelector('[data-react-scrolllock]');
 
-    expect(stylesheet).not.toBe(undefined);
+    expect(stylesheet).not.toBeNull();
+    expect(stylesheet).not.toBeUndefined();
+
+    wrapper.unmount();
+  });
+  it('should find many lock sheets', () => {
+    const wrapper = mount(
+      <div>
+        <ScrollLock />
+        <ScrollLock />
+      </div>,
+    );
+    const stylesheets = document.querySelectorAll('[data-react-scrolllock]');
+
+    expect(stylesheets).toHaveLength(2);
+
+    wrapper.unmount();
   });
 });
