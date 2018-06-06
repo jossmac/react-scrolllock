@@ -5,8 +5,7 @@ import { SimpleToggle } from 'react-prop-toggle';
 
 import { getPadding, getDocumentHeight } from './utils';
 import withTouchListeners from './withTouchListeners';
-
-let LOCK_COUNT = 0;
+import StyleSheet from './StyleSheet';
 
 type Props = {
   accountForScrollbars: boolean,
@@ -21,47 +20,39 @@ class ScrollLock extends PureComponent<Props> {
     accountForScrollbars: true,
   };
   componentDidMount() {
-    LOCK_COUNT++;
-    if (canUseDOM) {
-      this.initialHeight = window.innerHeight;
-    }
+    if (!canUseDOM) return;
+    this.initialHeight = window.innerHeight;
   }
   componentWillUnmount() {
-    LOCK_COUNT = Math.max(LOCK_COUNT - 1, 0);
+    const offset = window.innerHeight - this.initialHeight;
 
-    if (canUseDOM) {
-      const offset = window.innerHeight - this.initialHeight;
-
-      // adjust scroll if the window has been resized since the lock was engaged
-      if (offset) {
-        window.scrollTo(0, window.pageYOffset + offset);
-      }
+    // adjust scroll if the window has been resized since the lock was engaged
+    // e.g. mobile safari dynamic chrome heights
+    if (offset) {
+      window.scrollTo(0, window.pageYOffset + offset);
     }
 
     // reset the initial height in case this scroll lock is used again
     this.initialHeight = window.innerHeight;
   }
-
-  render() {
+  getStyles = () => {
     const { accountForScrollbars } = this.props;
 
-    // avoid overly incrementing padding
-    const scrollbarSpacer =
-      accountForScrollbars && LOCK_COUNT < 1 ? { 'padding-right': `${getPadding()}px` } : {};
+    const height = getDocumentHeight();
+    const paddingRight = accountForScrollbars ? getPadding() : null;
+    const styles = `body {
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+      position: relative !important;
+      ${height ? `height: ${height}px !important;` : ''}
+      ${paddingRight ? `padding-right: ${paddingRight}px !important;` : ''}
+    }`;
 
-    const height = `${getDocumentHeight()}px`;
+    return styles;
+  };
 
-    return (
-      <SimpleToggle
-        styles={{
-          'box-sizing': 'border-box', // account for possible declaration `width: 100%;` on body
-          overflow: 'hidden',
-          position: 'relative',
-          height: height,
-          ...scrollbarSpacer,
-        }}
-      />
-    );
+  render() {
+    return <StyleSheet styles={this.getStyles()} />;
   }
 }
 

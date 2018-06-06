@@ -1,30 +1,29 @@
-// @flow
-import React, { Component } from "react";
-import { mount, shallow } from "enzyme";
-import Lorem from "react-lorem-component";
+import React, { Component } from 'react';
+import { mount } from 'enzyme';
 
-import ScrollLock from "../src";
-import { LOCK_STYLES, STYLE_KEYS } from "../src/constants";
+import ScrollLock from '../src';
 
-class Mock extends Component<*> {
-  render() {
-    return (
+describe('test', () => {
+  it('should find the lock sheet', () => {
+    const wrapper = mount(<ScrollLock />);
+    const stylesheet = document.querySelector('[data-react-scrolllock]');
+
+    expect(stylesheet).not.toBeNull();
+    expect(stylesheet).not.toBeUndefined();
+
+    wrapper.unmount();
+  });
+  it('should find many lock sheets', () => {
+    const wrapper = mount(
       <div>
-        <Lorem count={100} />
         <ScrollLock />
-      </div>
+        <ScrollLock />
+      </div>,
     );
-  }
-}
+    const stylesheets = document.querySelectorAll('[data-react-scrolllock]');
 
-describe("test", () => {
-  it("should apply default styles", () => {
-    const { style } = document.body;
-    const wrapper = mount(<Mock />);
+    expect(stylesheets).toHaveLength(2);
 
-    Object.keys(LOCK_STYLES).forEach(key => {
-      expect(style[key]).toBe(LOCK_STYLES[key]);
-    });
+    wrapper.unmount();
   });
 });
-

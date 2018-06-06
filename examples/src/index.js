@@ -23,7 +23,7 @@ import './index.css';
 
 class App extends Component {
   currentHeight: number;
-  state = { isLocked: false, lockCount: 0 };
+  state = { isLocked: false };
   componentDidMount() {
     this.currentHeight = window.innerHeight;
 
