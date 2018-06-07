@@ -1,7 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
 import { canUseDOM } from 'exenv';
-import { SimpleToggle } from 'react-prop-toggle';
 
 import { getPadding, getDocumentHeight } from './utils';
 import withTouchListeners from './withTouchListeners';
