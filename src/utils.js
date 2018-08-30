@@ -21,12 +21,12 @@ export function preventInertiaScroll() {
 // `ontouchstart` check works on most browsers
 // `maxTouchPoints` works on IE10/11 and Surface
 export function isTouchDevice() {
-  if (!window) return false;
+  if (typeof window === 'undefined' || !window) return false;
   return 'ontouchstart' in window || navigator.maxTouchPoints;
 }
 
 export function getPadding() {
-  if (!document || !window) return 0;
+  if (typeof window === 'undefined' || !window || !document) return 0;
 
   const currentPadding = parseInt(document.body.paddingRight, 10) || 0;
   const clientWidth = document.body ? document.body.clientWidth : 0;
@@ -40,13 +40,13 @@ export function camelToKebab(str: string): string {
 }
 
 export function getWindowHeight(multiplier = 1) {
-  if (window && window.innerHeight) {
+  if (typeof window !== 'undefined' && window && window.innerHeight) {
     return window.innerHeight * multiplier;
   }
 }
 
 export function getDocumentHeight() {
-  if (document && document.body) {
+  if (typeof window !== 'undefined' && document && document.body) {
     return document.body.clientHeight;
   }
 }
