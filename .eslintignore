@@ -1,0 +1,4 @@
+examples/*
+config/*
+dist/*
+node_modules/*

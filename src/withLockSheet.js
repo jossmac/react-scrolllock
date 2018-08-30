@@ -7,7 +7,6 @@ import {
   injectStyles,
   insertStyleTag,
   makeStyleTag,
-  sheetForTag,
 } from './utils';
 import type { Props } from './types';
 

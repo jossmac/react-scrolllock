@@ -51,8 +51,8 @@ export function parse(val: number | string): string {
 // Take a list of functions and return a function that applies the list of
 // functions from left to right
 
-const _pipe = (a, b) => (...args) => b(a(...args));
-export const pipe = (...fns) => fns.reduce(_pipe);
+const pipeFns = (a, b) => (...args) => b(a(...args));
+export const pipe = (...fns) => fns.reduce(pipeFns);
 
 // ==============================
 // Document Helpers
@@ -84,7 +84,7 @@ export function getDocumentHeight() {
 // Style Sheets
 // ==============================
 
-export function makeStyleTag(id) {
+export function makeStyleTag() {
   if (!canUseDOM) return;
 
   let tag = document.createElement('style');

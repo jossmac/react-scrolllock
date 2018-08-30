@@ -1,12 +1,11 @@
 // @flow
 
-import React, { PureComponent, type Element } from 'react';
+import { PureComponent } from 'react';
 import { canUseDOM } from 'exenv';
 
-import { getPadding, getDocumentHeight, pipe } from './utils';
+import { pipe } from './utils';
 import withTouchListeners from './withTouchListeners';
 import withLockSheet from './withLockSheet';
-import { TouchScrollable } from './TouchScrollable';
 import type { Props } from './types';
 
 class ScrollLock extends PureComponent<Props> {
