@@ -35,7 +35,8 @@
     "disable-scroll"
   ],
   "dependencies": {
-    "exenv": "^1.2.2"
+    "exenv": "^1.2.2",
+    "react-node-resolver": "^2.0.0"
   },
   "peerDependencies": {
     "react": "^16.3.0"

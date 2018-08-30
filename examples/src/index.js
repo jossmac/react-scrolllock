@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 import PropToggle from 'react-prop-toggle';
 
-import ScrollLock from '../../src';
-import { getWindowHeight } from '../../src/utils';
+import { ScrollLockToggle, TouchScrollable } from '../../src';
+import { getWindowHeight, isTouchDevice } from '../../src/utils';
 import {
   Anchor,
   Button,
+  ChevronDown,
   Code,
   Container,
   Footer,
@@ -14,7 +15,7 @@ import {
   Icon,
   Repo,
   Title,
-  TouchScrollArea,
+  ScrollArea,
 } from './styled';
 import './index.css';
 
@@ -23,7 +24,7 @@ import './index.css';
 
 class App extends Component {
   currentHeight: number;
-  state = { isLocked: false };
+  state = { chevronOpacity: 0.5, isLocked: false };
   componentDidMount() {
     this.currentHeight = window.innerHeight;
 
@@ -51,52 +52,86 @@ class App extends Component {
   getScrollArea = ref => {
     this.scrollArea = ref;
   };
+  onScroll = event => {
+    const chevronOpacity =
+      (this.scrollArea.clientHeight - event.target.scrollTop) / 100 / 2;
+    this.setState({ chevronOpacity });
+  };
 
   render() {
-    const { isLocked } = this.state;
+    const { chevronOpacity, isLocked } = this.state;
 
     return (
       <Container height={getWindowHeight(2)}>
-        {isLocked ? <ScrollLock touchScrollTarget={this.scrollArea} /> : null}
         <PropToggle
           isActive={isLocked}
           styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }}
         />
 
         <Header>
-          <Icon role="img" className="animate-dropin" style={isLocked ? { bottom: -3 } : null}>
+          <Icon
+            role="img"
+            className="animate-dropin"
+            style={isLocked ? { bottom: -3 } : null}
+          >
             {isLocked ? '🔒' : '🔓'}
           </Icon>
           <div>
             Prevent scroll on <Code>{'<body />'}</Code> with
             <Title>
               {' '}
-              <Repo href="https://github.com/jossmac/react-scrolllock">react-scrolllock</Repo>
+              <Repo href="https://github.com/jossmac/react-scrolllock">
+                react-scrolllock
+              </Repo>
             </Title>
           </div>
         </Header>
-        <Button onClick={this.toggleLock}>{isLocked ? 'Locked' : 'Unlocked'}</Button>
+        <Button onClick={this.toggleLock}>
+          {isLocked ? 'Locked' : 'Unlocked'}
+        </Button>
 
-        <TouchScrollArea
-          innerRef={this.getScrollArea}
-          height={this.scrollArea && this.scrollArea.clientHeight}
-        >
-          <p>
-            Provide an element to the <Code>touchScrollTarget</Code> property if you need an area
-            that supports scroll on mobile.
-          </p>
-          {isLocked ? (
+        <ScrollLockToggle isActive={isLocked} />
+        <div style={{ position: 'relative' }}>
+          <ScrollArea
+            height={this.scrollArea && this.scrollArea.clientHeight}
+            innerRef={this.getScrollArea}
+            onScroll={this.onScroll}
+          >
             <p>
-              This is necessary because the <Code>touchmove</Code> event is explicitly cancelled
-              &mdash; iOS doesn't observe <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
-              <Code>{'<body />'}</Code> element 😢
+              Wrap an element in the <Code>TouchScrollable</Code> component if
+              you need an area that supports scroll on mobile.
             </p>
+            {isLocked ? (
+              <p>
+                This is necessary because the <Code>touchmove</Code> event is
+                explicitly cancelled &mdash; iOS doesn't observe{' '}
+                <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
+                <Code>{'<body />'}</Code> element 😢
+              </p>
+            ) : null}
+          </ScrollArea>
+          {isLocked ? (
+            <div
+              style={{
+                position: 'relative',
+                opacity: chevronOpacity,
+                lineHeight: 1,
+              }}
+            >
+              <ChevronDown
+                style={{ position: 'absolute', marginLeft: -12, top: -12 }}
+              />
+            </div>
           ) : null}
-        </TouchScrollArea>
+        </div>
 
         <Footer>
           <span> by </span>
-          <Anchor isLocked={isLocked} href="https://twitter.com/jossmackison" target="_blank">
+          <Anchor
+            isLocked={isLocked}
+            href="https://twitter.com/jossmackison"
+            target="_blank"
+          >
             @jossmac
           </Anchor>
         </Footer>

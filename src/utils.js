@@ -1,3 +1,14 @@
+import { canUseDOM } from 'exenv';
+
+export const listenerOptions = {
+  capture: false,
+  passive: false,
+};
+
+// ==============================
+// Touch Helpers
+// ==============================
+
 export function preventTouchMove(e) {
   e.preventDefault();
 }
@@ -21,12 +32,34 @@ export function preventInertiaScroll() {
 // `ontouchstart` check works on most browsers
 // `maxTouchPoints` works on IE10/11 and Surface
 export function isTouchDevice() {
-  if (typeof window === 'undefined' || !window) return false;
+  if (!canUseDOM) return false;
   return 'ontouchstart' in window || navigator.maxTouchPoints;
 }
 
+// ==============================
+// Misc.
+// ==============================
+
+export function camelToKebab(str: string): string {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+export function parse(val: number | string): string {
+  return isNaN(val) ? val : `${val}px`;
+}
+
+// Take a list of functions and return a function that applies the list of
+// functions from left to right
+
+const _pipe = (a, b) => (...args) => b(a(...args));
+export const pipe = (...fns) => fns.reduce(_pipe);
+
+// ==============================
+// Document Helpers
+// ==============================
+
 export function getPadding() {
-  if (typeof window === 'undefined' || !window || !document) return 0;
+  if (!canUseDOM) return 0;
 
   const currentPadding = parseInt(document.body.paddingRight, 10) || 0;
   const clientWidth = document.body ? document.body.clientWidth : 0;
@@ -35,24 +68,16 @@ export function getPadding() {
   return adjustedPadding;
 }
 
-export function camelToKebab(str: string): string {
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-}
-
 export function getWindowHeight(multiplier = 1) {
-  if (typeof window !== 'undefined' && window && window.innerHeight) {
+  if (canUseDOM) {
     return window.innerHeight * multiplier;
   }
 }
 
 export function getDocumentHeight() {
-  if (typeof window !== 'undefined' && document && document.body) {
+  if (canUseDOM) {
     return document.body.clientHeight;
   }
-}
-
-export function parse(val: number | string): string {
-  return isNaN(val) ? val : `${val}px`;
 }
 
 // ==============================
@@ -60,6 +85,8 @@ export function parse(val: number | string): string {
 // ==============================
 
 export function makeStyleTag(id) {
+  if (!canUseDOM) return;
+
   let tag = document.createElement('style');
   tag.type = 'text/css';
   tag.setAttribute('data-react-scrolllock', '');
@@ -67,6 +94,8 @@ export function makeStyleTag(id) {
   return tag;
 }
 export function injectStyles(tag, css) {
+  if (!canUseDOM) return;
+
   if (tag.styleSheet) {
     tag.styleSheet.cssText = css;
   } else {
@@ -74,6 +103,8 @@ export function injectStyles(tag, css) {
   }
 }
 export function insertStyleTag(tag) {
+  if (!canUseDOM) return;
+
   const head = document.head || document.getElementsByTagName('head')[0];
   head.appendChild(tag);
 }

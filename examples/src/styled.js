@@ -49,7 +49,9 @@ export const Repo = ({ isLocked, ...props }) => (
   ==============================
 */
 
-export const Header = props => <header css={{ marginBottom: '2em' }} {...props} />;
+export const Header = props => (
+  <header css={{ marginBottom: '2em' }} {...props} />
+);
 export const Footer = props => <footer css={{ marginTop: '2em' }} {...props} />;
 export const Icon = props => (
   <div
@@ -64,7 +66,7 @@ export const Icon = props => (
     {...props}
   />
 );
-export const TouchScrollArea = ({ height, innerRef, ...props }) => (
+export const ScrollArea = ({ height, innerRef, ...props }) => (
   <div
     ref={innerRef}
     css={{
@@ -141,7 +143,8 @@ export const Button = props => (
       width: '100%',
 
       ':hover': {
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(0, 0, 0, 0.1)',
+        boxShadow:
+          '0 2px 5px rgba(0, 0, 0, 0.25), 0 1px 1px rgba(0, 0, 0, 0.1)',
         transform: 'scale(1.01)',
       },
       ':active': {
@@ -151,4 +154,23 @@ export const Button = props => (
     }}
     {...props}
   />
+);
+
+export const ChevronDown = ({ fg = 'white', bg = 'inherit', style }) => (
+  <svg
+    width="24px"
+    height="24px"
+    viewBox="0 0 24 24"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    style={style}
+  >
+    <g stroke="none" strokeWidth="1" fill="inherit" fillRule="evenodd">
+      <circle fill={bg} cx="12" cy="12" r="10" />
+      <path
+        d="M8.29175,10.293 C7.90275,10.685 7.90275,11.32 8.29175,11.712 L11.23075,14.677 C11.44875,14.892 11.73075,14.999 12.00975,14.999 C12.28875,14.999 12.56575,14.892 12.77875,14.677 L15.70875,11.722 C16.09675,11.33 16.09675,10.695 15.70875,10.303 C15.31975,9.911 14.69075,9.911 14.30275,10.303 L12.00475,12.62 L9.69775,10.293 C9.50375,10.098 9.24875,10 8.99475,10 C8.73975,10 8.48475,10.098 8.29175,10.293 Z"
+        fill={fg}
+      />
+    </g>
+  </svg>
 );

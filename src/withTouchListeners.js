@@ -1,8 +1,13 @@
 // @flow
 import React, { PureComponent, type ComponentType } from 'react';
-import { canUseDOM } from 'exenv';
+import { canUseEventListeners } from 'exenv';
 
-import { allowTouchMove, isTouchDevice, preventInertiaScroll, preventTouchMove } from './utils';
+import {
+  allowTouchMove,
+  isTouchDevice,
+  preventInertiaScroll,
+  preventTouchMove,
+} from './utils';
 
 type Props = {
   touchScrollTarget?: HTMLElement,
@@ -15,7 +20,7 @@ export default function withTouchListeners(WrappedComponent: ComponentType<*>) {
       passive: false,
     };
     componentDidMount() {
-      if (!canUseDOM) return;
+      if (!canUseEventListeners) return;
 
       const { touchScrollTarget } = this.props;
       const target = document.body;
@@ -23,7 +28,11 @@ export default function withTouchListeners(WrappedComponent: ComponentType<*>) {
       // account for touch devices
       if (target && isTouchDevice()) {
         // Mobile Safari ignores { overflow: hidden } declaration on the body.
-        target.addEventListener('touchmove', preventTouchMove, this.listenerOptions);
+        target.addEventListener(
+          'touchmove',
+          preventTouchMove,
+          this.listenerOptions,
+        );
 
         // Allow scroll on provided target
         if (touchScrollTarget) {
@@ -32,19 +41,27 @@ export default function withTouchListeners(WrappedComponent: ComponentType<*>) {
             preventInertiaScroll,
             this.listenerOptions,
           );
-          touchScrollTarget.addEventListener('touchmove', allowTouchMove, this.listenerOptions);
+          touchScrollTarget.addEventListener(
+            'touchmove',
+            allowTouchMove,
+            this.listenerOptions,
+          );
         }
       }
     }
     componentWillUnmount() {
-      if (!canUseDOM) return;
+      if (!canUseEventListeners) return;
 
       const { touchScrollTarget } = this.props;
       const target = document.body;
 
       // remove touch listeners
       if (target && isTouchDevice()) {
-        target.removeEventListener('touchmove', preventTouchMove, this.listenerOptions);
+        target.removeEventListener(
+          'touchmove',
+          preventTouchMove,
+          this.listenerOptions,
+        );
 
         if (touchScrollTarget) {
           touchScrollTarget.removeEventListener(
@@ -52,7 +69,11 @@ export default function withTouchListeners(WrappedComponent: ComponentType<*>) {
             preventInertiaScroll,
             this.listenerOptions,
           );
-          touchScrollTarget.removeEventListener('touchmove', allowTouchMove, this.listenerOptions);
+          touchScrollTarget.removeEventListener(
+            'touchmove',
+            allowTouchMove,
+            this.listenerOptions,
+          );
         }
       }
     }

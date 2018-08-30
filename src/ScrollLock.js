@@ -1,17 +1,15 @@
 // @flow
-import React, { PureComponent } from 'react';
+
+import React, { createContext, PureComponent, type Element } from 'react';
 import { canUseDOM } from 'exenv';
 
-import { getPadding, getDocumentHeight } from './utils';
+import { getPadding, getDocumentHeight, pipe } from './utils';
 import withTouchListeners from './withTouchListeners';
-import StyleSheet from './StyleSheet';
+import withLockSheet from './withLockSheet';
+import { TouchScrollable } from './TouchScrollable';
+import type { Props } from './types';
 
-type Props = {
-  accountForScrollbars: boolean,
-};
-type TargetStyle = {
-  [key: string]: string | null,
-};
+const { Provider, Consumer } = createContext();
 
 class ScrollLock extends PureComponent<Props> {
   initialHeight: number;
@@ -34,25 +32,14 @@ class ScrollLock extends PureComponent<Props> {
     // reset the initial height in case this scroll lock is used again
     this.initialHeight = window.innerHeight;
   }
-  getStyles = () => {
-    const { accountForScrollbars } = this.props;
-
-    const height = getDocumentHeight();
-    const paddingRight = accountForScrollbars ? getPadding() : null;
-    const styles = `body {
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-      position: relative !important;
-      ${height ? `height: ${height}px !important;` : ''}
-      ${paddingRight ? `padding-right: ${paddingRight}px !important;` : ''}
-    }`;
-
-    return styles;
-  };
 
   render() {
-    return <StyleSheet styles={this.getStyles()} />;
+    const { children } = this.props;
+
+    return children ? children : null;
   }
 }
 
-export default withTouchListeners(ScrollLock);
+const compose = pipe(withTouchListeners, withLockSheet);
+
+export default compose(ScrollLock);
