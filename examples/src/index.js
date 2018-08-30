@@ -91,39 +91,43 @@ class App extends Component {
         </Button>
 
         <ScrollLockToggle isActive={isLocked} />
-        <div style={{ position: 'relative' }}>
-          <ScrollArea
-            height={this.scrollArea && this.scrollArea.clientHeight}
-            innerRef={this.getScrollArea}
-            onScroll={this.onScroll}
-          >
-            <p>
-              Wrap an element in the <Code>TouchScrollable</Code> component if
-              you need an area that supports scroll on mobile.
-            </p>
+        {isTouchDevice() ? (
+          <div style={{ position: 'relative' }}>
+            <TouchScrollable>
+              <ScrollArea
+                height={this.scrollArea && this.scrollArea.clientHeight}
+                innerRef={this.getScrollArea}
+                onScroll={this.onScroll}
+              >
+                <p>
+                  Wrap an element in the <Code>TouchScrollable</Code> component
+                  if you need an area that supports scroll on mobile.
+                </p>
+                {isLocked ? (
+                  <p>
+                    This is necessary because the <Code>touchmove</Code> event
+                    is explicitly cancelled &mdash; iOS doesn't observe{' '}
+                    <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
+                    <Code>{'<body />'}</Code> element 😢
+                  </p>
+                ) : null}
+              </ScrollArea>
+            </TouchScrollable>
             {isLocked ? (
-              <p>
-                This is necessary because the <Code>touchmove</Code> event is
-                explicitly cancelled &mdash; iOS doesn't observe{' '}
-                <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
-                <Code>{'<body />'}</Code> element 😢
-              </p>
+              <div
+                style={{
+                  position: 'relative',
+                  opacity: chevronOpacity,
+                  lineHeight: 1,
+                }}
+              >
+                <ChevronDown
+                  style={{ position: 'absolute', marginLeft: -12, top: -12 }}
+                />
+              </div>
             ) : null}
-          </ScrollArea>
-          {isLocked ? (
-            <div
-              style={{
-                position: 'relative',
-                opacity: chevronOpacity,
-                lineHeight: 1,
-              }}
-            >
-              <ChevronDown
-                style={{ position: 'absolute', marginLeft: -12, top: -12 }}
-              />
-            </div>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
 
         <Footer>
           <span> by </span>

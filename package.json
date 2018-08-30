@@ -14,9 +14,7 @@
     "publish:examples": "npm run build:examples && npm run deploy:examples"
   },
   "jest": {
-    "setupFiles": [
-      "<rootDir>/config/setupPolyfills.js"
-    ],
+    "setupFiles": ["<rootDir>/config/setupPolyfills.js"],
     "setupTestFrameworkScriptFile": "<rootDir>/config/setupFramework.js"
   },
   "repository": {
@@ -28,12 +26,7 @@
     "url": "https://github.com/jossmac/react-scrolllock/issues"
   },
   "homepage": "https://jossmac.github.io/react-scrolllock",
-  "keywords": [
-    "react",
-    "scroll",
-    "scroll-lock",
-    "disable-scroll"
-  ],
+  "keywords": ["react", "scroll", "scroll-lock", "disable-scroll"],
   "dependencies": {
     "exenv": "^1.2.2",
     "react-node-resolver": "^2.0.0"

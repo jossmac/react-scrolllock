@@ -1,6 +1,6 @@
 // @flow
 
-import React, { createContext, PureComponent, type Element } from 'react';
+import React, { PureComponent, type Element } from 'react';
 import { canUseDOM } from 'exenv';
 
 import { getPadding, getDocumentHeight, pipe } from './utils';
@@ -8,8 +8,6 @@ import withTouchListeners from './withTouchListeners';
 import withLockSheet from './withLockSheet';
 import { TouchScrollable } from './TouchScrollable';
 import type { Props } from './types';
-
-const { Provider, Consumer } = createContext();
 
 class ScrollLock extends PureComponent<Props> {
   initialHeight: number;
