@@ -1,8 +1,9 @@
 // @flow
 
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { canUseDOM } from 'exenv';
 
+import { TouchScrollable } from './TouchScrollable';
 import { pipe } from './utils';
 import withTouchListeners from './withTouchListeners';
 import withLockSheet from './withLockSheet';
@@ -33,7 +34,7 @@ class ScrollLock extends PureComponent<Props> {
   render() {
     const { children } = this.props;
 
-    return children ? children : null;
+    return children ? <TouchScrollable>{children}</TouchScrollable> : null;
   }
 }
 

@@ -7,7 +7,7 @@ import { allowTouchMove, preventInertiaScroll, listenerOptions } from './utils';
 
 type Props = {
   // allow touch-scroll on this element
-  children?: Element<*>,
+  children: Element<*>,
 };
 
 export class TouchScrollable extends PureComponent<Props> {
