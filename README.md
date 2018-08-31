@@ -18,11 +18,16 @@ class Modal extends Component {
     return (
       <div>
         ...
+        // lock children will be wrapped by TouchScrollable
         <ScrollLock>
-          <TouchScrollable>
-            {/* single element with scrollable content */}
-          </TouchScrollable>
+          <ElementWithOverflowScroll>...</ElementWithOverflowScroll>
         </ScrollLock>
+
+        // or, if you're app structure doesn't allow the above
+        <ScrollLock />
+        <TouchScrollable>
+          <ElementWithOverflowScroll>...</ElementWithOverflowScroll>
+        </TouchScrollable>
       </div>
     );
   }
@@ -32,7 +37,7 @@ class Modal extends Component {
 const Page = ({ someProp }) => (
   <div>
     ...
-    <ScrollLockToggle isActive={someProp}>
+    <ScrollLockToggle isActive={someProp} />
   </div>
 );
 ```
