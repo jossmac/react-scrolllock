@@ -37,7 +37,7 @@
   "dependencies": {
     "exenv": "^1.2.2"
   },
-  "peer-dependencies": {
+  "peerDependencies": {
     "react": "^16.3.0"
   },
   "devDependencies": {
