@@ -4,8 +4,6 @@ import React, { PureComponent } from 'react';
 import { canUseDOM } from 'exenv';
 
 import { TouchScrollable } from './TouchScrollable';
-import { pipe } from './utils';
-import withTouchListeners from './withTouchListeners';
 import withLockSheet from './withLockSheet';
 import type { Props } from './types';
 
@@ -38,6 +36,4 @@ class ScrollLock extends PureComponent<Props> {
   }
 }
 
-const compose = pipe(withTouchListeners, withLockSheet);
-
-export default compose(ScrollLock);
+export default withLockSheet(ScrollLock);
