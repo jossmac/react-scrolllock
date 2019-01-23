@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 import PropToggle from 'react-prop-toggle';
 
-import { ScrollLockToggle, TouchScrollable } from '../../src';
+import ScrollLock, { TouchScrollable } from '../../src';
 import { getWindowHeight, isTouchDevice } from '../../src/utils';
 import {
   Anchor,
@@ -90,10 +90,9 @@ class App extends Component {
           {isLocked ? 'Locked' : 'Unlocked'}
         </Button>
 
-        <ScrollLockToggle isActive={isLocked} />
         {isTouchDevice() ? (
           <div style={{ position: 'relative' }}>
-            <TouchScrollable>
+            <ScrollLock isActive={isLocked}>
               <ScrollArea
                 height={this.scrollArea && this.scrollArea.clientHeight}
                 innerRef={this.getScrollArea}
@@ -112,7 +111,7 @@ class App extends Component {
                   </p>
                 ) : null}
               </ScrollArea>
-            </TouchScrollable>
+            </ScrollLock>
             {isLocked ? (
               <div
                 style={{
