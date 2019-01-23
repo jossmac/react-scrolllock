@@ -11,35 +11,32 @@ yarn add react-scrolllock
 ## Usage
 
 ```js
-import ScrollLock, { ScrollLockToggle, TouchScrollable } from 'react-scrolllock';
+import ScrollLock, { TouchScrollable } from 'react-scrolllock';
 
 class Modal extends Component {
+  state = { lockScroll: false }
   render() {
     return (
       <div>
         ...
-        // lock children will be wrapped by `TouchScrollable`
+        // the lock accepts a single child element, which supports touch-scrolling.
         <ScrollLock>
-          <ElementWithOverflowScroll>...</ElementWithOverflowScroll>
+          <ElementWithScrollableContent>...</ElementWithScrollableContent>
         </ScrollLock>
 
-        // or, if you're app structure doesn't allow the above, use `TouchScrollable` directly
+        // if your app structure doesn't allow wrapping like above, the `TouchScrollable`
+        // component is exposed as a named export.
         <ScrollLock />
         <TouchScrollable>
-          <ElementWithOverflowScroll>...</ElementWithOverflowScroll>
+          <ElementWithScrollableContent>...</ElementWithScrollableContent>
         </TouchScrollable>
+        
+        // you can also toggle the lock based on some state.
+        <ScrollLock isActive={this.state.lockScroll} />
       </div>
     );
   }
 }
-
-// for ease of use there's also a companion component
-const Page = ({ someProp }) => (
-  <div>
-    ...
-    <ScrollLockToggle isActive={someProp} />
-  </div>
-);
 ```
 
 ## Props
@@ -48,15 +45,9 @@ const Page = ({ someProp }) => (
 
 | Property                       | Description                                                                    |
 | :----------------------------- | :----------------------------------------------------------------------------- |
-| accountForScrollbars `boolean` | Default: `true` -- Whether or not to replace the scrollbar width when mounted. |
-
-#### ScrollLockToggle
-
-Inherits `accountForScrollbars` from ScrollLock.
-
-| Property           | Description                                            |
-| :----------------- | :----------------------------------------------------- |
-| isActive `boolean` | Default: `false` -- Whether or not the lock is active. |
+| accountForScrollbars `boolean` | Default: `true` -- Whether or not to replace the scrollbar width when active. |
+| isActive `boolean` | Default: `true` -- Whether or not the lock is active. |
+| children `element` | Default: `null` -- This element is wrapped internally by the TouchScrollable component. |
 
 #### TouchScrollable
 
@@ -66,4 +57,4 @@ This is necessary because the `touchmove` event is explicitly cancelled &mdash; 
 
 | Property                 | Description                                    |
 | :----------------------- | :--------------------------------------------- |
-| children `React.Element` | **Required** The element that can be scrolled. |
+| children `element` | **Required** The element that can be scrolled. |
