@@ -1,7 +1,7 @@
 {
   "name": "react-scrolllock",
   "description": "Prevent scroll on the body when component is mounted.",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
