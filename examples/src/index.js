@@ -90,9 +90,10 @@ class App extends Component {
           {isLocked ? 'Locked' : 'Unlocked'}
         </Button>
 
+        <ScrollLock isActive={isLocked} />
         {isTouchDevice() ? (
           <div style={{ position: 'relative' }}>
-            <ScrollLock isActive={isLocked}>
+            <TouchScrollable>
               <ScrollArea
                 height={this.scrollArea && this.scrollArea.clientHeight}
                 innerRef={this.getScrollArea}
@@ -111,7 +112,7 @@ class App extends Component {
                   </p>
                 ) : null}
               </ScrollArea>
-            </ScrollLock>
+            </TouchScrollable>
             {isLocked ? (
               <div
                 style={{

@@ -17,10 +17,6 @@ type Props = {
 
 class ScrollLock extends PureComponent<Props> {
   initialHeight: number;
-  static defaultProps = {
-    accountForScrollbars: true,
-    isActive: true,
-  };
   componentDidMount() {
     if (!canUseDOM) return;
     this.initialHeight = window.innerHeight;
@@ -50,5 +46,11 @@ const SheetLock = withLockSheet(ScrollLock);
 
 // toggle the lock based on `isActive` prop
 const LockToggle = ({ isActive, ...props }: Props) => isActive ? <SheetLock {...props} /> : props.children;
+
+LockToggle.defaultProps = {
+  accountForScrollbars: true,
+  children: null,
+  isActive: true,
+};
 
 export default LockToggle;
