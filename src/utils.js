@@ -11,10 +11,20 @@ export const listenerOptions = {
 
 export function preventTouchMove(e) {
   e.preventDefault();
+  
+  return false;
 }
 
 export function allowTouchMove(e) {
-  e.stopPropagation();
+  const target = e.currentTarget;
+  
+  if (target.scrollHeight > target.clientHeight) {
+    e.stopPropagation();
+    return true;
+  }
+
+  e.preventDefault();
+  return false;
 }
 
 export function preventInertiaScroll() {

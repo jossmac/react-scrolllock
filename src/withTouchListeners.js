@@ -2,35 +2,23 @@
 import React, { PureComponent, type ComponentType } from 'react';
 import { canUseDOM } from 'exenv';
 
-import { isTouchDevice, preventTouchMove } from './utils';
+import { isTouchDevice, listenerOptions, preventTouchMove } from './utils';
 
 type Props = {};
 
+// Mobile Safari ignores { overflow: hidden } declaration on the body,
+// so we have to prevent touchmove events via JS
 export default function withTouchListeners(WrappedComponent: ComponentType<*>) {
     return class TouchProvider extends PureComponent<Props> {
-        listenerOptions = {
-            capture: false,
-            passive: false,
-        };
         componentDidMount() {
-            if (!canUseDOM) return;
-            const target = document.body;
+            if (!canUseDOM || !isTouchDevice()) return;
 
-            // account for touch devices
-            if (target && isTouchDevice()) {
-                // Mobile Safari ignores { overflow: hidden } declaration on the body.
-                target.addEventListener('touchmove', preventTouchMove, this.listenerOptions);
-            }
+            document.addEventListener('touchmove', preventTouchMove, listenerOptions);
         }
         componentWillUnmount() {
-            if (!canUseDOM) return;
+            if (!canUseDOM || !isTouchDevice()) return;
 
-            const target = document.body;
-
-            // remove touch listeners
-            if (target && isTouchDevice()) {
-                target.removeEventListener('touchmove', preventTouchMove, this.listenerOptions);
-            }
+            document.removeEventListener('touchmove', preventTouchMove, listenerOptions);
         }
         render() {
             return <WrappedComponent {...this.props} />;
