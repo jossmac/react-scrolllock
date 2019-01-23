@@ -6,17 +6,17 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
+    "lint": "eslint .",
     "start": "webpack-dev-server --mode development",
     "build": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run build",
     "build:examples": "webpack --mode production",
     "deploy:examples": "gh-pages -d examples/dist",
-    "publish:examples": "npm run build:examples && npm run deploy:examples"
+    "publish:examples": "npm run build:examples && npm run deploy:examples",
+    "precommit": "flow check && lint-staged"
   },
   "jest": {
-    "setupFiles": [
-      "<rootDir>/config/setupPolyfills.js"
-    ],
+    "setupFiles": ["<rootDir>/config/setupPolyfills.js"],
     "setupTestFrameworkScriptFile": "<rootDir>/config/setupFramework.js"
   },
   "repository": {
@@ -28,14 +28,10 @@
     "url": "https://github.com/jossmac/react-scrolllock/issues"
   },
   "homepage": "https://jossmac.github.io/react-scrolllock",
-  "keywords": [
-    "react",
-    "scroll",
-    "scroll-lock",
-    "disable-scroll"
-  ],
+  "keywords": ["react", "scroll", "scroll-lock", "disable-scroll"],
   "dependencies": {
-    "exenv": "^1.2.2"
+    "exenv": "^1.2.2",
+    "react-node-resolver": "^2.0.1"
   },
   "peerDependencies": {
     "react": "^16.3.0"
@@ -43,6 +39,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^9.0.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -52,6 +49,8 @@
     "css-loader": "^0.28.11",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
+    "eslint": "^5.4.0",
+    "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.61.0",
     "gh-pages": "^1.1.0",
     "glam": "^5.0.1",
@@ -67,5 +66,8 @@
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^3.1.3"
+  },
+  "lint-staged": {
+    "*.js": "eslint"
   }
 }

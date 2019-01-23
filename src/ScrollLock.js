@@ -1,23 +1,24 @@
 // @flow
+
 import React, { PureComponent } from 'react';
 import { canUseDOM } from 'exenv';
 
-import { getPadding, getDocumentHeight } from './utils';
+import { TouchScrollable } from './TouchScrollable';
+import withLockSheet from './withLockSheet';
 import withTouchListeners from './withTouchListeners';
-import StyleSheet from './StyleSheet';
+import { pipe } from './utils';
 
 type Props = {
+  // whether or not to replace the void left by now absent scrollbars with padding
   accountForScrollbars: boolean,
-};
-type TargetStyle = {
-  [key: string]: string | null,
+  // allow touch-scroll on this element
+  children?: Element<*>,
+  // whether or not the lock is active
+  isActive: boolean,
 };
 
 class ScrollLock extends PureComponent<Props> {
   initialHeight: number;
-  static defaultProps = {
-    accountForScrollbars: true,
-  };
   componentDidMount() {
     if (!canUseDOM) return;
     this.initialHeight = window.innerHeight;
@@ -34,25 +35,26 @@ class ScrollLock extends PureComponent<Props> {
     // reset the initial height in case this scroll lock is used again
     this.initialHeight = window.innerHeight;
   }
-  getStyles = () => {
-    const { accountForScrollbars } = this.props;
-
-    const height = getDocumentHeight();
-    const paddingRight = accountForScrollbars ? getPadding() : null;
-    const styles = `body {
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-      position: relative !important;
-      ${height ? `height: ${height}px !important;` : ''}
-      ${paddingRight ? `padding-right: ${paddingRight}px !important;` : ''}
-    }`;
-
-    return styles;
-  };
 
   render() {
-    return <StyleSheet styles={this.getStyles()} />;
+    const { children } = this.props;
+
+    return children ? <TouchScrollable>{children}</TouchScrollable> : null;
   }
 }
 
-export default withTouchListeners(ScrollLock);
+// attach the stylesheet and inject styles on [un]mount
+const compose = pipe(withTouchListeners, withLockSheet);
+const SheetLock = compose(ScrollLock);
+
+// toggle the lock based on `isActive` prop
+const LockToggle = (props: Props) =>
+  props.isActive ? <SheetLock {...props} /> : props.children;
+
+LockToggle.defaultProps = {
+  accountForScrollbars: true,
+  children: null,
+  isActive: true,
+};
+
+export default LockToggle;
