@@ -5,6 +5,8 @@ import { canUseDOM } from 'exenv';
 
 import { TouchScrollable } from './TouchScrollable';
 import withLockSheet from './withLockSheet';
+import withTouchListeners from './withTouchListeners';
+import { pipe } from './utils';
 
 type Props = {
   // whether or not to replace the void left by now absent scrollbars with padding
@@ -35,17 +37,19 @@ class ScrollLock extends PureComponent<Props> {
   }
 
   render() {
-    const { children, isActive } = this.props;
+    const { children } = this.props;
 
-    return isActive ? <TouchScrollable>{children}</TouchScrollable> : children;
+    return children ? <TouchScrollable>{children}</TouchScrollable> : null;
   }
 }
 
 // attach the stylesheet and inject styles on [un]mount
-const SheetLock = withLockSheet(ScrollLock);
+const compose = pipe(withTouchListeners, withLockSheet);
+const SheetLock = compose(ScrollLock);
 
 // toggle the lock based on `isActive` prop
-const LockToggle = ({ isActive, ...props }: Props) => isActive ? <SheetLock {...props} /> : props.children;
+const LockToggle = (props: Props) =>
+  props.isActive ? <SheetLock {...props} /> : props.children;
 
 LockToggle.defaultProps = {
   accountForScrollbars: true,
