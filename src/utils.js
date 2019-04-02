@@ -11,14 +11,19 @@ export const listenerOptions = {
 
 export function preventTouchMove(e) {
   e.preventDefault();
-  
+
   return false;
 }
 
 export function allowTouchMove(e) {
   const target = e.currentTarget;
-  
+
   if (target.scrollHeight > target.clientHeight) {
+    e.stopPropagation();
+    return true;
+  }
+
+  if (target.scrollWidth > target.clientWidth) {
     e.stopPropagation();
     return true;
   }
