@@ -133,7 +133,7 @@ class App extends Component {
           <div style={{ position: 'relative' }}>
             <TouchScrollable>
               <ScrollArea
-                height={300}
+                height={this.scrollArea && this.scrollArea.clientHeight}
                 innerRef={this.getScrollArea}
                 onScroll={this.onScroll}
               >
@@ -141,7 +141,7 @@ class App extends Component {
 
                 <div
                   style={{
-                    width: window.innerWidth,
+                    width: 220,
                     display: 'flex',
                     flexDirection: 'row',
                   }}
