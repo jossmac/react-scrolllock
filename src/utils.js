@@ -23,7 +23,13 @@ export function allowTouchMove(e) {
     return true;
   }
 
-  if (target.scrollWidth > target.clientWidth) {
+  var horizontalScroll = target.querySelector(
+    'div[data-horizontal-scroll="true"]',
+  );
+  var isInHorizontalScroll =
+    horizontalScroll.contains(e.target) || e.target === horizontalScroll;
+
+  if (target.scrollWidth > target.clientWidth || isInHorizontalScroll) {
     e.stopPropagation();
     return true;
   }
