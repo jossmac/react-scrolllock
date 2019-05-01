@@ -45,7 +45,7 @@ export default function withLockSheet(WrappedComponent: ComponentType<*>) {
       const styles = `body {
         box-sizing: border-box !important;
         overflow: hidden !important;
-        position: relative !important;
+        position: static !important;
         ${height ? `height: ${height}px !important;` : ''}
         ${paddingRight ? `padding-right: ${paddingRight}px !important;` : ''}
       }`;
