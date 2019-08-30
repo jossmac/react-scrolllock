@@ -3,6 +3,7 @@
   "description": "Prevent scroll on the body when component is mounted.",
   "version": "4.0.0",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
     "test": "jest",
@@ -37,6 +38,7 @@
     "react": "^16.3.0"
   },
   "devDependencies": {
+    "@types/react": "^16.8.20",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^9.0.0",
