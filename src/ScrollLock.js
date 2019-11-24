@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react';
 import { canUseDOM } from 'exenv';
 
-import { TouchScrollable } from './TouchScrollable';
+import { TouchScrollable, type ChildrenType } from './TouchScrollable';
 import withLockSheet from './withLockSheet';
 import withTouchListeners from './withTouchListeners';
 import { pipe } from './utils';
@@ -12,7 +12,7 @@ type Props = {
   // whether or not to replace the void left by now absent scrollbars with padding
   accountForScrollbars: boolean,
   // allow touch-scroll on this element
-  children?: Element<*>,
+  children?: ChildrenType,
   // whether or not the lock is active
   isActive: boolean,
 };

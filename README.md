@@ -30,7 +30,7 @@ class Modal extends Component {
         <TouchScrollable>
           <ElementWithScrollableContent>...</ElementWithScrollableContent>
         </TouchScrollable>
-        
+
         // you can also toggle the lock based on some state.
         <ScrollLock isActive={this.state.lockScroll} />
       </div>
@@ -57,4 +57,4 @@ This is necessary because the `touchmove` event is explicitly cancelled &mdash; 
 
 | Property                 | Description                                    |
 | :----------------------- | :--------------------------------------------- |
-| children `element` | **Required** The element that can be scrolled. |
+| children `element` | `ref => element` | **Required** The element that can be scrolled. |

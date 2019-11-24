@@ -17,7 +17,9 @@
     "precommit": "flow check && lint-staged"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/config/setupPolyfills.js"],
+    "setupFiles": [
+      "<rootDir>/config/setupPolyfills.js"
+    ],
     "setupTestFrameworkScriptFile": "<rootDir>/config/setupFramework.js"
   },
   "repository": {
@@ -29,10 +31,14 @@
     "url": "https://github.com/jossmac/react-scrolllock/issues"
   },
   "homepage": "https://jossmac.github.io/react-scrolllock",
-  "keywords": ["react", "scroll", "scroll-lock", "disable-scroll"],
+  "keywords": [
+    "react",
+    "scroll",
+    "scroll-lock",
+    "disable-scroll"
+  ],
   "dependencies": {
-    "exenv": "^1.2.2",
-    "react-node-resolver": "^2.0.1"
+    "exenv": "^1.2.2"
   },
   "peerDependencies": {
     "react": "^16.3.0"
