@@ -1,5 +1,7 @@
 /* @jsx glam */
+
 import glam from 'glam';
+import { forwardRef } from 'react';
 
 const gutter = 15;
 
@@ -66,9 +68,9 @@ export const Icon = props => (
     {...props}
   />
 );
-export const ScrollArea = ({ height, innerRef, ...props }) => (
+export const ScrollArea = forwardRef(({ height, innerRef, ...props }, ref) => (
   <div
-    ref={innerRef}
+    ref={ref || innerRef}
     css={{
       backgroundColor: 'rgba(255, 255, 255, 0.5)',
       boxSizing: 'border-box',
@@ -91,7 +93,7 @@ export const ScrollArea = ({ height, innerRef, ...props }) => (
     }}
     {...props}
   />
-);
+));
 export const Title = props => (
   <h1
     css={{

@@ -1,13 +1,14 @@
 // @flow
-import React, { PureComponent, type Element } from 'react';
+import { cloneElement, PureComponent, type Element, type ElementRef } from 'react';
 import { canUseEventListeners } from 'exenv';
-import NodeResolver from 'react-node-resolver';
 
 import { allowTouchMove, preventInertiaScroll, listenerOptions } from './utils';
 
+export type ChildrenType = Element<*> | ElementRef<*> => Element<*>;
+
 type Props = {
   // allow touch-scroll on this element
-  children: Element<*>,
+  children: ChildrenType,
 };
 
 export class TouchScrollable extends PureComponent<Props> {
@@ -44,6 +45,10 @@ export class TouchScrollable extends PureComponent<Props> {
     );
   }
   render() {
-    return <NodeResolver innerRef={this.getScrollableArea} {...this.props} />;
+    const { children, ...rest } = this.props;
+
+    return typeof children === 'function'
+      ? children(this.getScrollableArea)
+      : cloneElement(children, { ref: this.getScrollableArea, ...rest });
   }
 }

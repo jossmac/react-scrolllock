@@ -94,24 +94,29 @@ class App extends Component {
         {isTouchDevice() ? (
           <div style={{ position: 'relative' }}>
             <TouchScrollable>
-              <ScrollArea
-                height={this.scrollArea && this.scrollArea.clientHeight}
-                innerRef={this.getScrollArea}
-                onScroll={this.onScroll}
-              >
-                <p>
-                  Wrap an element in the <Code>TouchScrollable</Code> component
-                  if you need an area that supports scroll on mobile.
-                </p>
-                {isLocked ? (
+              {touchScrollableRef => (
+                <ScrollArea
+                  height={this.scrollArea && this.scrollArea.clientHeight}
+                  innerRef={val => {
+                    this.getScrollArea(val);
+                    touchScrollableRef(val);
+                  }}
+                  onScroll={this.onScroll}
+                >
                   <p>
-                    This is necessary because the <Code>touchmove</Code> event
-                    is explicitly cancelled &mdash; iOS doesn't observe{' '}
-                    <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
-                    <Code>{'<body />'}</Code> element 😢
+                    Wrap an element in the <Code>TouchScrollable</Code> component
+                    if you need an area that supports scroll on mobile.
                   </p>
-                ) : null}
-              </ScrollArea>
+                  {isLocked ? (
+                    <p>
+                      This is necessary because the <Code>touchmove</Code> event
+                      is explicitly cancelled &mdash; iOS doesn't observe{' '}
+                      <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
+                      <Code>{'<body />'}</Code> element 😢
+                    </p>
+                  ) : null}
+                </ScrollArea>
+              )}
             </TouchScrollable>
             {isLocked ? (
               <div
