@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 import PropToggle from 'react-prop-toggle';
 
-import ScrollLock, { TouchScrollable } from '../../src';
+import ScrollLock, { TouchScrollable, useScrollLock } from '../../src';
 import { getWindowHeight, isTouchDevice } from '../../src/utils';
 import {
   Anchor,
@@ -104,8 +104,9 @@ class App extends Component {
                   onScroll={this.onScroll}
                 >
                   <p>
-                    Wrap an element in the <Code>TouchScrollable</Code> component
-                    if you need an area that supports scroll on mobile.
+                    Wrap an element in the <Code>TouchScrollable</Code>{' '}
+                    component if you need an area that supports scroll on
+                    mobile.
                   </p>
                   {isLocked ? (
                     <p>
@@ -152,4 +153,29 @@ class App extends Component {
 // render
 // ------------------------------
 
-render(<App />, document.getElementById('root'));
+const FunctionApp = () => {
+  const [isActive, setActive] = React.useState(false);
+  const ref = useScrollLock(isActive);
+
+  console.log(ref);
+
+  return (
+    <div style={{ height: 2000 }}>
+      <div
+        style={{
+          height: 200,
+          width: 400,
+          background: 'palevioletred',
+          overflowY: 'auto',
+        }}
+      >
+        <div style={{ height: 2000, width: 200, background: 'wheat' }}>
+          <p>Scrollable Content</p>
+          <button onClick={() => setActive(s => !s)}>Toggle</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+render(<FunctionApp />, document.getElementById('root'));
