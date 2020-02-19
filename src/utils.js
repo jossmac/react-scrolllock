@@ -71,13 +71,10 @@ export const pipe = (...fns) => fns.reduce(pipeFns);
 export function getPadding() {
   if (!canUseDOM) return 0;
 
-  const existingBodyPaddingRight =
-    parseInt(window.getComputedStyle(document.body).paddingRight, 10);
-  const scrollBarWidth =
-    window.innerWidth - document.documentElement.clientWidth;
-  const calculatedRightPadding = existingBodyPaddingRight + scrollBarWidth;
+  const paddingRight = parseInt(window.getComputedStyle(document.body).paddingRight, 10);
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
-  return calculatedRightPadding;
+  return paddingRight + scrollbarWidth;
 }
 
 export function getWindowHeight(multiplier = 1) {
@@ -118,5 +115,6 @@ export function insertStyleTag(tag) {
   if (!canUseDOM) return;
 
   const head = document.head || document.getElementsByTagName('head')[0];
+
   head.appendChild(tag);
 }
