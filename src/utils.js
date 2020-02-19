@@ -11,13 +11,13 @@ export const listenerOptions = {
 
 export function preventTouchMove(e) {
   e.preventDefault();
-  
+
   return false;
 }
 
 export function allowTouchMove(e) {
   const target = e.currentTarget;
-  
+
   if (target.scrollHeight > target.clientHeight) {
     e.stopPropagation();
     return true;
@@ -71,11 +71,13 @@ export const pipe = (...fns) => fns.reduce(pipeFns);
 export function getPadding() {
   if (!canUseDOM) return 0;
 
-  const currentPadding = parseInt(document.body.paddingRight, 10) || 0;
-  const clientWidth = document.body ? document.body.clientWidth : 0;
-  const adjustedPadding = window.innerWidth - clientWidth + currentPadding || 0;
+  const existingBodyPaddingRight =
+    parseInt(window.getComputedStyle(document.body).paddingRight, 10);
+  const scrollBarWidth =
+    window.innerWidth - document.documentElement.clientWidth;
+  const calculatedRightPadding = existingBodyPaddingRight + scrollBarWidth;
 
-  return adjustedPadding;
+  return calculatedRightPadding;
 }
 
 export function getWindowHeight(multiplier = 1) {
