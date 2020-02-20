@@ -1033,7 +1033,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.7":
+"@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.3":
   version "7.8.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.4.tgz#d79f5a2040f7caa24d53e563aad49cbc05581308"
   integrity sha512-neAp3zt80trRVBI1x0azq6c57aNBqYZH8KhMm3TaB7wEI5Q4A2SHfBHE8w9gOhI/lrqxtEbXZgQIrHP+wvSGwQ==
@@ -1416,6 +1416,11 @@
     "@babel/plugin-transform-modules-commonjs" "^7.6.0"
     pirates "^4.0.1"
     source-map-support "^0.5.13"
+
+"@preconstruct/next@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@preconstruct/next/-/next-1.0.1.tgz#609122ae91e5ee55b20d5b259643f563e56abc63"
+  integrity sha512-eXKu29el5hTMAJp0rLjMM/uMPv7WCKf+CZpCC0vQXEwMtX9zzY+Ke4dLubjm1QzQu9b8NlR8h12ff1oer692RQ==
 
 "@rollup/plugin-alias@^3.0.1":
   version "3.0.1"

@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Head from 'next/head';
+import { Global, css } from '@emotion/core';
 
 import { useScrollLock } from 'react-scrolllock';
 
@@ -160,62 +161,63 @@ export default function App() {
       </Container>
       <div style={{ height: offsetContent }} />
 
-      <style jsx global>{`
-        /* resets */
-        body {
-          -moz-font-feature-settings: 'liga' on;
-          -moz-osx-font-smoothing: grayscale;
-          -webkit-font-smoothing: antialiased;
-          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-          background-color: #e3fcef;
-          background-position: left top;
-          background-repeat: no-repeat;
-          background: linear-gradient(165deg, #abf5d1, #e3fcef);
-          color: #253858;
-          font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
-            Helvetica, sans-serif;
-          font-size: 18px;
-          font-style: normal;
-          font-weight: 400;
-          margin: 0;
-          padding: 0;
-          text-rendering: optimizeLegibility;
-        }
-        p > a,
-        p > a:hover,
-        p > a:visited {
-          color: #2684ff;
-        }
-        p > code {
-          white-space: nowrap;
-        }
-        p,
-        ul,
-        ol {
-          line-height: 1.5;
-        }
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-          color: #091e42;
-        }
-        h6 {
-          color: #777;
-          margin-bottom: 0.25em;
-          text-transform: uppercase;
-        }
-        a {
-          color: inherit;
-          text-decoration: none;
-          white-space: nowrap;
-        }
-        a:hover {
-          outline: 0;
-          text-decoration: underline;
-        }
-      `}</style>
+      <Global
+        styles={css`
+          body {
+            -moz-font-feature-settings: 'liga' on;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            background-color: #e3fcef;
+            background-position: left top;
+            background-repeat: no-repeat;
+            background: linear-gradient(165deg, #abf5d1, #e3fcef);
+            color: #253858;
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+              Helvetica, sans-serif;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            margin: 0;
+            padding: 0;
+            text-rendering: optimizeLegibility;
+          }
+          p > a,
+          p > a:hover,
+          p > a:visited {
+            color: #2684ff;
+          }
+          p > code {
+            white-space: nowrap;
+          }
+          p,
+          ul,
+          ol {
+            line-height: 1.5;
+          }
+          h1,
+          h2,
+          h3,
+          h4,
+          h5 {
+            color: #091e42;
+          }
+          h6 {
+            color: #777;
+            margin-bottom: 0.25em;
+            text-transform: uppercase;
+          }
+          a {
+            color: inherit;
+            text-decoration: none;
+            white-space: nowrap;
+          }
+          a:hover {
+            outline: 0;
+            text-decoration: underline;
+          }
+        `}
+      />
     </Fragment>
   );
 }
