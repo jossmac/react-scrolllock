@@ -4,7 +4,6 @@
   "version": "5.0.0",
   "main": "dist/react-scrolllock.cjs.js",
   "module": "dist/react-scrolllock.esm.js",
-  "types": "dist/react-scrolllock.d.ts",
   "license": "MIT",
   "peerDependencies": {
     "react": "^16.9.0"

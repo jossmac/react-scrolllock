@@ -1,4 +1,5 @@
 import { ReactElement, ReactNode, RefObject, cloneElement } from 'react';
+
 import { OptionsType, useScrollLock } from './useScrollLock';
 
 type ChildrenType =

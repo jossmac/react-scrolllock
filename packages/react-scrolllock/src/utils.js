@@ -33,7 +33,7 @@ const isIosDevice =
   /iP(ad|hone|od)/.test(window.navigator.platform);
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Problems_and_solutions
-const isTargetElementTotallyScrolled = targetElement => {
+const isElementCompletelyScrolled = targetElement => {
   if (targetElement) {
     const totalScroll =
       targetElement[`scroll${axis === 'y' ? 'Height' : 'Width'}`];
@@ -106,7 +106,7 @@ const handleScroll = (event, targetElement) => {
   }
 
   // element is at the END of its scroll
-  if (isTargetElementTotallyScrolled(targetElement) && clientPos < 0) {
+  if (isElementCompletelyScrolled(targetElement) && clientPos < 0) {
     return preventDefault(event);
   }
 

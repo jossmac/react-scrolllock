@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+
 import {
   clearAllScrollLocks,
   disableBodyScroll,
@@ -16,7 +17,6 @@ export type OptionsType = {
  * Accepts an active state and options object. Returns a ref object that can
  * optionally be applied to a scrollable element.
  *
- * @version 6.0.0
  * @see https://github.com/jossmac/react-scrolllock
  */
 export function useScrollLock(isActive: boolean, options: OptionsType) {
@@ -27,13 +27,17 @@ export function useScrollLock(isActive: boolean, options: OptionsType) {
   };
 
   useEffect(() => {
+    const target = ref.current;
+
     if (isActive) {
-      disableBodyScroll(ref.current, opts);
+      disableBodyScroll(target, opts);
 
       return () => {
-        enableBodyScroll(ref.current);
+        enableBodyScroll(target);
       };
     }
+    /* we only want this hook to run if the value of isActive changes */
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [isActive]);
 
   // clean everything up on "beforeunload"
