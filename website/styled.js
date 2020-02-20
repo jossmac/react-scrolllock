@@ -1,6 +1,6 @@
-/* @jsx glam */
+/** @jsx jsx */
 
-import glam from 'glam';
+import { jsx, keyframes } from '@emotion/core';
 import { forwardRef } from 'react';
 
 const gutter = 15;
@@ -25,12 +25,14 @@ export const Container = props => (
     {...props}
   />
 );
-export const Anchor = ({ isLocked, ...props }) => (
-  <a css={{ color: isLocked ? '#FF5630' : '#36B37E' }} {...props} />
+export const Anchor = ({ href, isLocked, ...props }) => (
+  <a css={{ color: isLocked ? '#FF5630' : '#36B37E' }} href={href} {...props} />
 );
-export const Repo = ({ isLocked, ...props }) => (
+export const Repo = ({ href, isLocked, ...props }) => (
   <a
     target="_blank"
+    href={href}
+    rel="noopener"
     css={{
       paddingBottom: 1,
       borderBottom: '1px solid rgba(0, 0, 0, 0.3)',
@@ -58,6 +60,7 @@ export const Footer = props => <footer css={{ marginTop: '2em' }} {...props} />;
 export const Icon = props => (
   <div
     css={{
+      animation: `${animDropIn} 0.66s`,
       fontSize: 64,
       height: 64,
       lineHeight: 1,
@@ -184,3 +187,33 @@ export const ChevronDown = ({ fg = 'white', bg = 'inherit', style }) => (
     </g>
   </svg>
 );
+
+// Keyframes
+// ------------------------------
+
+const animDropIn = keyframes`{
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -1666px, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 26px, 0);
+  }
+  75% {
+    transform: translate3d(0, -10px, 0);
+  }
+  90% {
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}`;

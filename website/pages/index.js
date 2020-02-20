@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { render } from 'react-dom';
-import PropToggle from 'react-prop-toggle';
+import Head from 'next/head';
 
-import { useScrollLock } from '../../src';
+import { useScrollLock } from 'react-scrolllock';
+
 import {
   Anchor,
   Button,
@@ -16,13 +16,12 @@ import {
   ScrollArea,
   SmallScreen,
   Title,
-} from './styled';
-import './index.css';
+} from '../styled';
 
 // example
 // ------------------------------
 
-function App() {
+export default function App() {
   const [chevronOpacity, setChevronOpacity] = useState(0.5);
   const [isLocked, setLocked] = useState(false);
   const [scrollHeight, setScrollHeight] = useState('auto');
@@ -40,23 +39,60 @@ function App() {
 
   const offsetContent = 1000;
 
+  // prepare page with measurements
   useEffect(() => {
     if (typeof window !== 'undefined') {
       window.scrollTo(0, offsetContent);
     }
 
     setScrollHeight(scrollArea.current.clientHeight);
-  }, []);
+  }, [scrollArea]);
+
+  // toggle behaviours when locked state changes
+  useEffect(() => {
+    if (isLocked) {
+      document.body.style.background =
+        'linear-gradient(165deg, #FFBDAD, #FFEBE5)';
+
+      return () => {
+        console.log('remove background');
+
+        document.body.style.background = null;
+      };
+    }
+  }, [isLocked]);
 
   return (
     <Fragment>
-      <div style={{ height: offsetContent }} />
-      <Container>
-        <PropToggle
-          isActive={isLocked}
-          styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }}
+      <Head>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="theme-color" content="#000" />
+
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <title>React ScrollLock</title>
+        <meta
+          name="description"
+          content="Prevent page scroll when your component is mounted."
         />
 
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@jossmac" />
+        <meta name="og:title" content="React ScrollLock" />
+        <meta
+          name="og:url"
+          content="https://jossmac.github.io/react-scrolllock"
+        />
+        <meta
+          name="og:description"
+          content="Prevent page scroll when your component is mounted."
+        />
+      </Head>
+      <div style={{ height: offsetContent }} />
+      <Container>
         <Header>
           <Icon
             role="img"
@@ -123,11 +159,63 @@ function App() {
         </Footer>
       </Container>
       <div style={{ height: offsetContent }} />
+
+      <style jsx global>{`
+        /* resets */
+        body {
+          -moz-font-feature-settings: 'liga' on;
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          background-color: #e3fcef;
+          background-position: left top;
+          background-repeat: no-repeat;
+          background: linear-gradient(165deg, #abf5d1, #e3fcef);
+          color: #253858;
+          font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+            Helvetica, sans-serif;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 400;
+          margin: 0;
+          padding: 0;
+          text-rendering: optimizeLegibility;
+        }
+        p > a,
+        p > a:hover,
+        p > a:visited {
+          color: #2684ff;
+        }
+        p > code {
+          white-space: nowrap;
+        }
+        p,
+        ul,
+        ol {
+          line-height: 1.5;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+          color: #091e42;
+        }
+        h6 {
+          color: #777;
+          margin-bottom: 0.25em;
+          text-transform: uppercase;
+        }
+        a {
+          color: inherit;
+          text-decoration: none;
+          white-space: nowrap;
+        }
+        a:hover {
+          outline: 0;
+          text-decoration: underline;
+        }
+      `}</style>
     </Fragment>
   );
 }
-
-// render
-// ------------------------------
-
-render(<App />, document.getElementById('root'));

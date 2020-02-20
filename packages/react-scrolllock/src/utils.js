@@ -60,7 +60,7 @@ const getTouchTarget = event => {
 // returns true if `el` should be allowed to receive touchmove events
 const allowTouchMove = el => {
   return locks.some(lock => {
-    if (lock.options.allowTouchMove && lock.options.allowTouchMove(el)) {
+    if (lock.options.touchMoveResolver && lock.options.touchMoveResolver(el)) {
       return true;
     }
 

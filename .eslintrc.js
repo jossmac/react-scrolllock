@@ -1,41 +1,28 @@
 module.exports = {
-  parser: 'babel-eslint',
-  env: {
-    browser: true,
-    es6: true,
-    node: true,
-  },
-  plugins: ['react'],
+  extends: 'react-app',
+  plugins: ['prettier', 'import', 'react-hooks'],
   rules: {
-    'no-unused-vars': [
+    'prettier/prettier': 'error',
+    'sort-imports': [
       'error',
       {
-        args: 'after-used',
-        argsIgnorePattern: '^event$',
-        ignoreRestSiblings: true,
-        vars: 'all',
+        ignoreDeclarationSort: true,
       },
     ],
-    curly: [2, 'multi-line'],
-    'jsx-quotes': 1,
-    'no-shadow': 1,
-    'no-trailing-spaces': 1,
-    'no-underscore-dangle': 1,
-    'no-unused-expressions': 1,
-    'object-curly-spacing': [1, 'always'],
-    quotes: [2, 'single', 'avoid-escape'],
-    'react/jsx-boolean-value': 1,
-    'react/jsx-no-undef': 1,
-    'react/jsx-uses-react': 1,
-    'react/jsx-uses-vars': 1,
-    'react/jsx-wrap-multilines': 1,
-    'react/no-did-mount-set-state': 1,
-    'react/no-did-update-set-state': 1,
-    'react/no-unknown-property': 1,
-    'react/react-in-jsx-scope': 1,
-    'react/self-closing-comp': 1,
-    'react/sort-prop-types': 1,
-    semi: 2,
-    strict: 0,
+    'import/order': [
+      'error',
+      {
+        'newlines-between': 'always-and-inside-groups',
+      },
+    ],
+    'import/no-extraneous-dependencies': 'error',
+    'jsx-a11y/anchor-is-valid': 0,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };
