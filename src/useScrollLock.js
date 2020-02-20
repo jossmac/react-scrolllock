@@ -2,17 +2,17 @@
 
 import { useEffect, useRef } from 'react';
 import {
-  type BodyScrollOptions,
+  clearAllScrollLocks,
   disableBodyScroll,
   enableBodyScroll,
 } from './utilities';
 
-export function useScrollLock(isActive, options: BodyScrollOptions) {
+export function useScrollLock(isActive, options) {
   const opts = {
-    reserveScrollbarGap: true,
+    accountForScrollbars: true,
     ...options,
   };
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef(null);
 
   useEffect(() => {
     if (isActive) {
@@ -24,5 +24,22 @@ export function useScrollLock(isActive, options: BodyScrollOptions) {
     }
   }, [isActive]);
 
+  // clean everything up on "beforeunload"
+  useUnloadEffect(clearAllScrollLocks);
+
   return ref;
 }
+
+const useUnloadEffect = fn => {
+  const cb = useRef();
+
+  cb.current = fn;
+
+  useEffect(() => {
+    const onUnload = () => cb.current();
+
+    window.addEventListener('beforeunload', onUnload);
+
+    return () => window.removeEventListener('beforeunload', onUnload);
+  }, [cb]);
+};

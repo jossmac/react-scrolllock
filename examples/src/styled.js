@@ -8,13 +8,13 @@ const gutter = 15;
 // styled components
 // ------------------------------
 
-export const Container = ({ height, ...props }) => (
+export const Container = props => (
   <div
     css={{
       alignItems: 'center',
       display: 'flex ',
       flexDirection: 'column',
-      height: height,
+      height: '100vh',
       justifyContent: 'center',
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -68,16 +68,27 @@ export const Icon = props => (
     {...props}
   />
 );
-export const ScrollArea = forwardRef(({ height, innerRef, ...props }, ref) => (
+export const SmallScreen = props => (
   <div
-    ref={ref || innerRef}
+    css={{
+      display: 'none',
+      position: 'relative',
+
+      '@media (max-width: 420px)': {
+        display: 'block',
+      },
+    }}
+    {...props}
+  />
+);
+export const ScrollArea = forwardRef(({ height, ...props }, ref) => (
+  <div
+    ref={ref}
     css={{
       backgroundColor: 'rgba(255, 255, 255, 0.5)',
       boxSizing: 'border-box',
       color: '#091e42',
-      display: 'none',
       fontSize: '0.8em',
-      height: height,
       lineHeight: '1.4',
       marginLeft: -gutter,
       marginRight: -gutter,
@@ -86,11 +97,8 @@ export const ScrollArea = forwardRef(({ height, innerRef, ...props }, ref) => (
       paddingLeft: 20,
       paddingRight: 20,
       WebkitOverflowScrolling: 'touch',
-
-      '@media (max-width: 420px)': {
-        display: 'block',
-      },
     }}
+    style={{ height }}
     {...props}
   />
 ));

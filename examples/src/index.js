@@ -1,9 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { render } from 'react-dom';
 import PropToggle from 'react-prop-toggle';
 
-import ScrollLock, { TouchScrollable, useScrollLock } from '../../src';
-import { getWindowHeight, isTouchDevice } from '../../src/utils';
+import { useScrollLock } from '../../src';
 import {
   Anchor,
   Button,
@@ -14,55 +13,45 @@ import {
   Header,
   Icon,
   Repo,
-  Title,
   ScrollArea,
+  SmallScreen,
+  Title,
 } from './styled';
 import './index.css';
 
 // example
 // ------------------------------
 
-class App extends Component {
-  currentHeight: number;
-  state = { chevronOpacity: 0.5, isLocked: false };
-  componentDidMount() {
-    this.currentHeight = window.innerHeight;
+function App() {
+  const [chevronOpacity, setChevronOpacity] = useState(0.5);
+  const [isLocked, setLocked] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState('auto');
+  const scrollArea = useScrollLock(isLocked);
 
-    // center the content
-    setTimeout(() => {
-      window.scrollTo(0, getWindowHeight(0.6));
-    }, 100);
-  }
+  const toggleLock = () => setLocked(s => !s);
 
-  toggleLock = () => {
-    this.setState(state => {
-      const isLocked = !state.isLocked;
-      const offset = window.innerHeight - this.currentHeight;
-
-      // adjust scroll if the window has been resized
-      if (offset && isLocked) {
-        window.scrollTo(0, window.pageYOffset + offset);
-      }
-
-      this.currentHeight = window.innerHeight;
-
-      return { isLocked };
-    });
-  };
-  getScrollArea = ref => {
-    this.scrollArea = ref;
-  };
-  onScroll = event => {
-    const chevronOpacity =
-      (this.scrollArea.clientHeight - event.target.scrollTop) / 100 / 2;
-    this.setState({ chevronOpacity });
+  const onScroll = event => {
+    if (scrollArea.current) {
+      const opacity =
+        (scrollArea.current.clientHeight - event.target.scrollTop) / 100 / 2;
+      setChevronOpacity(opacity);
+    }
   };
 
-  render() {
-    const { chevronOpacity, isLocked } = this.state;
+  const offsetContent = 1000;
 
-    return (
-      <Container height={getWindowHeight(2)}>
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, offsetContent);
+    }
+
+    setScrollHeight(scrollArea.current.clientHeight);
+  }, []);
+
+  return (
+    <Fragment>
+      <div style={{ height: offsetContent }} />
+      <Container>
         <PropToggle
           isActive={isLocked}
           styles={{ background: 'linear-gradient(165deg, #FFBDAD, #FFEBE5)' }}
@@ -86,54 +75,41 @@ class App extends Component {
             </Title>
           </div>
         </Header>
-        <Button onClick={this.toggleLock}>
-          {isLocked ? 'Locked' : 'Unlocked'}
-        </Button>
+        <Button onClick={toggleLock}>{isLocked ? 'Locked' : 'Unlocked'}</Button>
 
-        <ScrollLock isActive={isLocked} />
-        {isTouchDevice() ? (
-          <div style={{ position: 'relative' }}>
-            <TouchScrollable>
-              {touchScrollableRef => (
-                <ScrollArea
-                  height={this.scrollArea && this.scrollArea.clientHeight}
-                  innerRef={val => {
-                    this.getScrollArea(val);
-                    touchScrollableRef(val);
-                  }}
-                  onScroll={this.onScroll}
-                >
-                  <p>
-                    Wrap an element in the <Code>TouchScrollable</Code>{' '}
-                    component if you need an area that supports scroll on
-                    mobile.
-                  </p>
-                  {isLocked ? (
-                    <p>
-                      This is necessary because the <Code>touchmove</Code> event
-                      is explicitly cancelled &mdash; iOS doesn't observe{' '}
-                      <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
-                      <Code>{'<body />'}</Code> element 😢
-                    </p>
-                  ) : null}
-                </ScrollArea>
-              )}
-            </TouchScrollable>
+        <SmallScreen>
+          <ScrollArea
+            height={scrollHeight}
+            ref={scrollArea}
+            onScroll={onScroll}
+          >
+            <p>
+              Wrap an element in the <Code>TouchScrollable</Code> component if
+              you need an area that supports scroll on mobile.
+            </p>
             {isLocked ? (
-              <div
-                style={{
-                  position: 'relative',
-                  opacity: chevronOpacity,
-                  lineHeight: 1,
-                }}
-              >
-                <ChevronDown
-                  style={{ position: 'absolute', marginLeft: -12, top: -12 }}
-                />
-              </div>
+              <p>
+                This is necessary because the <Code>touchmove</Code> event is
+                explicitly cancelled &mdash; iOS doesn't observe{' '}
+                <Code>{'overflow: hidden;'}</Code> when applied to the{' '}
+                <Code>{'<body />'}</Code> element 😢
+              </p>
             ) : null}
-          </div>
-        ) : null}
+          </ScrollArea>
+          {isLocked ? (
+            <div
+              style={{
+                position: 'relative',
+                opacity: chevronOpacity,
+                lineHeight: 1,
+              }}
+            >
+              <ChevronDown
+                style={{ position: 'absolute', marginLeft: -12, top: -12 }}
+              />
+            </div>
+          ) : null}
+        </SmallScreen>
 
         <Footer>
           <span> by </span>
@@ -146,36 +122,12 @@ class App extends Component {
           </Anchor>
         </Footer>
       </Container>
-    );
-  }
+      <div style={{ height: offsetContent }} />
+    </Fragment>
+  );
 }
 
 // render
 // ------------------------------
 
-const FunctionApp = () => {
-  const [isActive, setActive] = React.useState(false);
-  const ref = useScrollLock(isActive);
-
-  console.log(ref);
-
-  return (
-    <div style={{ height: 2000 }}>
-      <div
-        style={{
-          height: 200,
-          width: 400,
-          background: 'palevioletred',
-          overflowY: 'auto',
-        }}
-      >
-        <div style={{ height: 2000, width: 200, background: 'wheat' }}>
-          <p>Scrollable Content</p>
-          <button onClick={() => setActive(s => !s)}>Toggle</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-render(<FunctionApp />, document.getElementById('root'));
+render(<App />, document.getElementById('root'));
