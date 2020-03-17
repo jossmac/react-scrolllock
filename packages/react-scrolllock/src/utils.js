@@ -123,10 +123,9 @@ const handleScroll = (event, targetElement) => {
   responsiveness for some reason.
 */
 
-const setBodyStyles = options => {
+const setBodyStyles = ({ accountForScrollbars } = {}) => {
   setTimeout(() => {
     if (paddingSetting === undefined) {
-      const accountForScrollbars = options && options.accountForScrollbars;
       const scrollbarGap =
         window.innerWidth - document.documentElement.clientWidth;
 

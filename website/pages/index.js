@@ -56,8 +56,6 @@ export default function App() {
         'linear-gradient(165deg, #FFBDAD, #FFEBE5)';
 
       return () => {
-        console.log('remove background');
-
         document.body.style.background = null;
       };
     }

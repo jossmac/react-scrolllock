@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+}

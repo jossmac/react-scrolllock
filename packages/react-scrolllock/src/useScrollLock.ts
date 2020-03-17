@@ -14,8 +14,8 @@ export type OptionsType = {
 };
 
 /**
- * Accepts an active state and options object. Returns a ref object that can
- * optionally be applied to a scrollable element.
+ * Accepts an active state and options object. Returns a ref that can optionally
+ * be applied to a scrollable element.
  *
  * @see https://github.com/jossmac/react-scrolllock
  */
