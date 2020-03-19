@@ -1,60 +1,61 @@
 # React Scroll Lock
 
-Prevent scroll on the `<body />` when a component is mounted.
+Prevent scroll on the `<body />` in your React application.
 
 ## Install
 
-```bash
+```sh
 yarn add react-scrolllock
 ```
 
 ## Usage
 
+### Hook (recommended)
+
+You must pass the `ref` to the element you wish to be "scrollable".
+
 ```js
-import ScrollLock, { TouchScrollable } from 'react-scrolllock';
+import { useScrollLock } from 'react-scrolllock';
 
-class Modal extends Component {
-  state = { lockScroll: false }
-  render() {
-    return (
-      <div>
+export const Modal = () => {
+  const ref = useScrollLock({ isActive: true });
+  return <div ref={ref}>...</div>;
+};
+```
+
+### Component
+
+Wrap the element you wish to be "scrollable" with `ScrollLock`. Given a React
+element, the ref will be cloned on to the element. For more control use the
+render-prop pattern.
+
+```js
+import { ScrollLock } from 'react-scrolllock';
+
+export const Modal = () => (
+  <ScrollLock isActive>
+    {scrollableRef => (
+      <div ref={scrollableRef}>
         ...
-        // the lock accepts a single child element, which supports touch-scrolling.
-        <ScrollLock>
-          <ElementWithScrollableContent>...</ElementWithScrollableContent>
-        </ScrollLock>
-
-        // if your app structure doesn't allow wrapping like above, the `TouchScrollable`
-        // component is exposed as a named export.
-        <ScrollLock />
-        <TouchScrollable>
-          <ElementWithScrollableContent>...</ElementWithScrollableContent>
-        </TouchScrollable>
-
-        // you can also toggle the lock based on some state.
-        <ScrollLock isActive={this.state.lockScroll} />
       </div>
-    );
-  }
-}
+    )}
+  </ScrollLock>>
+)
 ```
 
 ## Props
 
-#### ScrollLock
+### Hook
 
-| Property                       | Description                                                                    |
-| :----------------------------- | :----------------------------------------------------------------------------- |
+| Property                       | Description                                                                   |
+| :----------------------------- | :---------------------------------------------------------------------------- |
 | accountForScrollbars `boolean` | Default: `true` -- Whether or not to replace the scrollbar width when active. |
-| isActive `boolean` | Default: `true` -- Whether or not the lock is active. |
-| children `element` | Default: `null` -- This element is wrapped internally by the TouchScrollable component. |
+| isActive `boolean`             | Default: `undefined` -- Whether or not the lock is active.                    |
 
-#### TouchScrollable
+### Component
 
-Wrap an element in the `TouchScrollable` component if you need an area that supports scroll on mobile.
+As above plus `children`:
 
-This is necessary because the `touchmove` event is explicitly cancelled &mdash; iOS doesn't observe `overflow: hidden;` when applied to the `<body />` element 😢
-
-| Property                 | Description                                    |
-| :----------------------- | :--------------------------------------------- |
-| children `element` | `ref => element` | **Required** The element that can be scrolled. |
+| Property                            | Description                                    |
+| :---------------------------------- | :--------------------------------------------- |
+| children `element | ref => element` | **Required** The element that can be scrolled. |

@@ -26,7 +26,7 @@ export default function App() {
   const [chevronOpacity, setChevronOpacity] = useState(0.5);
   const [isLocked, setLocked] = useState(false);
   const [scrollHeight, setScrollHeight] = useState('auto');
-  const scrollArea = useScrollLock(isLocked);
+  const scrollArea = useScrollLock({ isActive: isLocked });
 
   const toggleLock = () => setLocked(s => !s);
 

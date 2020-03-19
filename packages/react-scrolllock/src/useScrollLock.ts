@@ -9,6 +9,8 @@ import {
 export type OptionsType = {
   // When true, and the lock is active, the gap left by absent scrollbars will be replaced by padding
   accountForScrollbars: boolean;
+  // When true, the lock is active and scroll will be locked
+  isActive: boolean;
   // Conditionally target elements that should be immune from the scroll lock (only affects iOS)
   touchMoveResolver?: (element: HTMLElement) => boolean;
 };
@@ -19,18 +21,19 @@ export type OptionsType = {
  *
  * @see https://github.com/jossmac/react-scrolllock
  */
-export function useScrollLock(isActive: boolean, options: OptionsType) {
+export function useScrollLock({
+  accountForScrollbars = true,
+  isActive,
+  touchMoveResolver,
+}: OptionsType) {
   const ref = useRef(null);
-  const opts = {
-    accountForScrollbars: true,
-    ...options,
-  };
+  const options = { accountForScrollbars, touchMoveResolver };
 
   useEffect(() => {
     const target = ref.current;
 
     if (isActive) {
-      disableBodyScroll(target, opts);
+      disableBodyScroll(target, options);
 
       return () => {
         enableBodyScroll(target);
@@ -40,7 +43,7 @@ export function useScrollLock(isActive: boolean, options: OptionsType) {
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [isActive]);
 
-  // clean everything up on "beforeunload"
+  // clean up any residual event handlers on "beforeunload"
   useUnloadEffect(clearAllScrollLocks);
 
   return ref;

@@ -1,7 +1,7 @@
 // Adapted from @willmcpo "body-scroll-lock"
 // https://github.com/willmcpo/body-scroll-lock
 
-// Constants & Defaults
+// Constants, Defaults & Helpers
 // ------------------------------
 
 let axis = null;
@@ -10,6 +10,16 @@ let initialClient = { x: -1, y: -1 };
 let locks = [];
 let overflowSetting;
 let paddingSetting;
+
+function getStyle(el, prop, { parse } = {}) {
+  let value = window.getComputedStyle(el).getPropertyValue(prop);
+
+  if (parse) {
+    return parseInt(value, 10);
+  }
+
+  return value;
+}
 
 // detect passive event support
 let hasPassiveEvents = false;
@@ -126,13 +136,17 @@ const handleScroll = (event, targetElement) => {
 const setBodyStyles = ({ accountForScrollbars } = {}) => {
   setTimeout(() => {
     if (paddingSetting === undefined) {
-      const scrollbarGap =
+      let existingPadding = getStyle(document.body, 'padding-right', {
+        parse: true,
+      });
+      let scrollbarGap =
         window.innerWidth - document.documentElement.clientWidth;
 
       // only apply padding styles when required
       if (accountForScrollbars && scrollbarGap > 0) {
+        let paddingOffset = `${existingPadding + scrollbarGap}px`;
         paddingSetting = document.body.style.paddingRight;
-        document.body.style.paddingRight = `${scrollbarGap}px`;
+        document.body.style.paddingRight = paddingOffset;
       }
     }
 
