@@ -1,3 +1,15 @@
+🚨 Not Maintained
+=================
+
+This was a great project to learn from and fulfilled the requirements it set out
+to. Unfortunately, I can no-longer give this project the time it needs. Consider
+[body-scroll-lock](https://github.com/willmcpo/body-scroll-lock) as an
+alternative.
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+---
+
 # React Scroll Lock
 
 Prevent scroll on the `<body />` when a component is mounted.
