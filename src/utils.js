@@ -18,7 +18,8 @@ export function preventTouchMove(e) {
 export function allowTouchMove(e) {
   const target = e.currentTarget;
 
-  if (target.scrollHeight > target.clientHeight) {
+  if (target.scrollHeight > target.clientHeight
+  || target.scrollWidth > target.clientWidth) {
     e.stopPropagation();
     return true;
   }
